@@ -15,6 +15,8 @@ def _gather_field_values(
 	Parameter:
 		item (dict): Item dict or filepath.
 		fields (list): A sequence of fields used to compare item dicts.
+		field_map (~collections.abc.Mapping): A mapping field name aliases.
+			Default: :data:`~google_music_utils.constants.FIELD_MAP`
 		normalize_values (bool): Normalize metadata values to remove common differences between sources.
 			Default: ``False``
 		normalize_func (function): Function to apply to metadata values if
@@ -64,6 +66,8 @@ def find_existing_items(
 		src (list): A sequence of item dicts or filepaths.
 		dst (list): A sequence of item dicts or filepaths.
 		fields (list): A sequence of fields used to compare item dicts.
+		field_map (~collections.abc.Mapping): A mapping field name aliases.
+			Default: :data:`~google_music_utils.constants.FIELD_MAP`
 		normalize_values (bool): Normalize metadata values to remove common differences between sources.
 			Default: ``False``
 		normalize_func (function): Function to apply to metadata values if
@@ -102,6 +106,8 @@ def find_missing_items(
 		src (list): A sequence of item dicts or filepaths.
 		dst (list): A sequence of item dicts or filepaths.
 		fields (list): A sequence of fields used to compare item dicts.
+		field_map (~collections.abc.Mapping): A mapping field name aliases.
+			Default: :data:`~google_music_utils.constants.FIELD_MAP`
 		normalize_values (bool): Normalize metadata values to remove common differences between sources.
 			Default: ``False``
 		normalize_func (function): Function to apply to metadata values if
