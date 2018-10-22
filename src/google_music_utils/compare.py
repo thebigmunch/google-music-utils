@@ -76,10 +76,6 @@ def find_existing_items(
 
 	Yields:
 		dict: The next item from ``src`` collection in ``dst`` collection.
-
-	Example:
-		>>> from google_music_utils import compare_item_collections
-		>>> list(compare_item_collections(song_list_1, song_list_2, fields=['artist', 'album', 'title']))
 	"""
 
 	dst_keys = {
@@ -116,10 +112,6 @@ def find_missing_items(
 
 	Yields:
 		dict: The next item from ``src`` collection not in ``dst`` collection.
-
-	Example:
-		>>> from google_music_utils import compare_item_collections
-		>>> list(compare_item_collections(song_list_1, song_list_2, fields=['artist', 'album', 'title']))
 	"""
 
 	dst_keys = {
