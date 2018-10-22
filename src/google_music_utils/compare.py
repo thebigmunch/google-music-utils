@@ -9,7 +9,7 @@ from .utils import list_to_single_value, normalize_value
 
 def _gather_field_values(
 	item, *, fields=None, field_map=FIELD_MAP,
-	normalize_values=False):
+	normalize_values=False, normalize_func=normalize_value):
 	"""Create a tuple of normalized metadata field values.
 
 	Parameter:
@@ -17,6 +17,9 @@ def _gather_field_values(
 		fields (list): A sequence of fields used to compare item dicts.
 		normalize_values (bool): Normalize metadata values to remove common differences between sources.
 			Default: ``False``
+		normalize_func (function): Function to apply to metadata values if
+			``normalize_values`` is ``True``.
+			Default: :func:`~google_music_utils.utils.normalize_value`
 
 	Returns:
 		tuple: Values from the given metadata fields.
@@ -31,7 +34,7 @@ def _gather_field_values(
 		else:
 			fields = list(item.keys())
 
-	normalize = normalize_value if normalize_values else lambda x: str(x)
+	normalize = normalize_func if normalize_values else lambda x: str(x)
 
 	field_values = []
 
@@ -54,7 +57,7 @@ def _gather_field_values(
 
 def find_existing_items(
 	src, dst, *, fields=None, field_map=None,
-	normalize_values=False):
+	normalize_values=False, normalize_func=normalize_value):
 	"""Find items from an item collection that are in another item collection.
 
 	Parameters:
@@ -63,6 +66,9 @@ def find_existing_items(
 		fields (list): A sequence of fields used to compare item dicts.
 		normalize_values (bool): Normalize metadata values to remove common differences between sources.
 			Default: ``False``
+		normalize_func (function): Function to apply to metadata values if
+			``normalize_values`` is ``True``.
+			Default: :func:`~google_music_utils.utils.normalize_value`
 
 	Yields:
 		dict: The next item from ``src`` collection in ``dst`` collection.
@@ -78,21 +84,21 @@ def find_existing_items(
 	dst_keys = {
 		_gather_field_values(
 			dst_item, fields=fields, field_map=field_map,
-			normalize_values=normalize_values
+			normalize_values=normalize_values, normalize_func=normalize_func
 		) for dst_item in dst
 	}
 
 	for src_item in src:
 		if _gather_field_values(
 			src_item, fields=fields, field_map=field_map,
-			normalize_values=normalize_values
+			normalize_values=normalize_values, normalize_func=normalize_func
 		) in dst_keys:
 			yield src_item
 
 
 def find_missing_items(
 	src, dst, *, fields=None, field_map=None,
-	normalize_values=False):
+	normalize_values=False, normalize_func=normalize_value):
 	"""Find items from an item collection that are not in another item collection.
 
 	Parameters:
@@ -101,6 +107,9 @@ def find_missing_items(
 		fields (list): A sequence of fields used to compare item dicts.
 		normalize_values (bool): Normalize metadata values to remove common differences between sources.
 			Default: ``False``
+		normalize_func (function): Function to apply to metadata values if
+			``normalize_values`` is ``True``.
+			Default: :func:`~google_music_utils.utils.normalize_value`
 
 	Yields:
 		dict: The next item from ``src`` collection not in ``dst`` collection.
@@ -116,14 +125,14 @@ def find_missing_items(
 	dst_keys = {
 		_gather_field_values(
 			dst_item, fields=fields, field_map=field_map,
-			normalize_values=normalize_values
+			normalize_values=normalize_values, normalize_func=normalize_func
 		) for dst_item in dst
 	}
 
 	for src_item in src:
 		if _gather_field_values(
 			src_item, fields=fields, field_map=field_map,
-			normalize_values=normalize_values
+			normalize_values=normalize_values, normalize_func=normalize_func
 		) not in dst_keys:
 			yield src_item
 

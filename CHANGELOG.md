@@ -11,6 +11,9 @@ This project adheres to [Semantic Versioning](https://semver.org).
 ### Added
 
 * Add ``find_existing_items`` for finding items common to two item collections.
+* Add ``normalize_func`` parameter to compare module functions to allow custom
+  field value normalization when ``normalize_values`` is ``True``.
+  The default normalization function remains the same.
 
 ### Changed
 
