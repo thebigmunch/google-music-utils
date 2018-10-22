@@ -1,4 +1,4 @@
-__all__ = ['find_missing_items']
+__all__ = ['find_existing_items', 'find_missing_items']
 
 import audio_metadata
 from multidict import MultiDict
@@ -31,7 +31,7 @@ def _gather_field_values(
 		else:
 			fields = list(item.keys())
 
-	normalize = normalize_values if normalize_values else lambda x: str(x)
+	normalize = normalize_value if normalize_values else lambda x: str(x)
 
 	field_values = []
 
@@ -50,6 +50,44 @@ def _gather_field_values(
 				field_values.append(normalize(list_to_single_value(item[alias])))
 
 	return tuple(field_values)
+
+
+def find_existing_items(
+	src, dst, *, fields=None, field_map=None,
+	normalize_values=False):
+	"""Find items from an item collection that are in another item collection.
+
+	Parameters:
+		src (list): A sequence of item dicts or filepaths.
+		dst (list): A sequence of item dicts or filepaths.
+		fields (list): A sequence of fields used to compare item dicts.
+		normalize_values (bool): Normalize metadata values to remove common differences between sources.
+			Default: ``False``
+
+	Yields:
+		dict: The next item from ``src`` collection in ``dst`` collection.
+
+	Example:
+		>>> from google_music_utils import compare_item_collections
+		>>> list(compare_item_collections(song_list_1, song_list_2, fields=['artist', 'album', 'title']))
+	"""
+
+	if field_map is None:
+		field_map = FIELD_MAP
+
+	dst_keys = {
+		_gather_field_values(
+			dst_item, fields=fields, field_map=field_map,
+			normalize_values=normalize_values
+		) for dst_item in dst
+	}
+
+	for src_item in src:
+		if _gather_field_values(
+			src_item, fields=fields, field_map=field_map,
+			normalize_values=normalize_values
+		) in dst_keys:
+			yield src_item
 
 
 def find_missing_items(

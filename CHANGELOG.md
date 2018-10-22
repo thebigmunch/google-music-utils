@@ -8,6 +8,10 @@ This project adheres to [Semantic Versioning](https://semver.org).
 
 [Commits](https://github.com/thebigmunch/google-music-utils/compare/1.0.0...master)
 
+### Added
+
+* Add ``find_existing_items`` for finding items common to two item collections.
+
 ### Changed
 
 * Rename ``compare_item_collections`` to ``find_missing_items``.
