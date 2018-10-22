@@ -29,6 +29,7 @@ Compare
 
 .. automodule:: google_music_utils.compare
 	:members:
+	:exclude-members: compare_item_collections
 
 
 Filter
