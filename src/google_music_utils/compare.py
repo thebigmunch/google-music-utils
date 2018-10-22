@@ -1,4 +1,4 @@
-__all__ = ['find_existing_items', 'find_missing_items']
+__all__ = ['compare_item_collections', 'find_existing_items', 'find_missing_items']
 
 import audio_metadata
 from multidict import MultiDict
