@@ -58,7 +58,7 @@ def _gather_field_values(
 
 
 def find_existing_items(
-	src, dst, *, fields=None, field_map=FIELD_MAP,
+	src, dst, *, fields=None, field_map=None,
 	normalize_values=False, normalize_func=normalize_value):
 	"""Find items from an item collection that are in another item collection.
 
@@ -78,6 +78,9 @@ def find_existing_items(
 		dict: The next item from ``src`` collection in ``dst`` collection.
 	"""
 
+	if field_map is None:
+		field_map = FIELD_MAP
+
 	dst_keys = {
 		_gather_field_values(
 			dst_item, fields=fields, field_map=field_map,
@@ -94,7 +97,7 @@ def find_existing_items(
 
 
 def find_missing_items(
-	src, dst, *, fields=None, field_map=FIELD_MAP,
+	src, dst, *, fields=None, field_map=None,
 	normalize_values=False, normalize_func=normalize_value):
 	"""Find items from an item collection that are not in another item collection.
 
@@ -113,6 +116,9 @@ def find_missing_items(
 	Yields:
 		dict: The next item from ``src`` collection not in ``dst`` collection.
 	"""
+
+	if field_map is None:
+		field_map = FIELD_MAP
 
 	dst_keys = {
 		_gather_field_values(
