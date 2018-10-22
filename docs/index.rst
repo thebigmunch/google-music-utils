@@ -12,6 +12,10 @@ Constants
 
 	Mapping of invalid filepath characters with appropriate replacements.
 
+.. data:: FIELD_MAP
+
+	Mapping of field name aliases.
+
 .. data:: TEMPLATE_PATTERNS
 
 	Mapping of template patterns to their audio-metadata field name.

@@ -16,6 +16,7 @@ _FIELD_MAP_GROUPS = [
 _FIELD_MAP = [(field, alias) for group in _FIELD_MAP_GROUPS for field in group for alias in group if field != alias]
 
 FIELD_MAP = MultiDict(_FIELD_MAP)
+"""MultiDict: Mapping of field name aliases."""
 
 # TODO: Support other/more metadata field names.
 # TODO: Support multiple field names per template pattern.
