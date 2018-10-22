@@ -56,7 +56,7 @@ def _gather_field_values(
 
 
 def find_existing_items(
-	src, dst, *, fields=None, field_map=None,
+	src, dst, *, fields=None, field_map=FIELD_MAP,
 	normalize_values=False, normalize_func=normalize_value):
 	"""Find items from an item collection that are in another item collection.
 
@@ -78,9 +78,6 @@ def find_existing_items(
 		>>> list(compare_item_collections(song_list_1, song_list_2, fields=['artist', 'album', 'title']))
 	"""
 
-	if field_map is None:
-		field_map = FIELD_MAP
-
 	dst_keys = {
 		_gather_field_values(
 			dst_item, fields=fields, field_map=field_map,
@@ -97,7 +94,7 @@ def find_existing_items(
 
 
 def find_missing_items(
-	src, dst, *, fields=None, field_map=None,
+	src, dst, *, fields=None, field_map=FIELD_MAP,
 	normalize_values=False, normalize_func=normalize_value):
 	"""Find items from an item collection that are not in another item collection.
 
@@ -118,9 +115,6 @@ def find_missing_items(
 		>>> from google_music_utils import compare_item_collections
 		>>> list(compare_item_collections(song_list_1, song_list_2, fields=['artist', 'album', 'title']))
 	"""
-
-	if field_map is None:
-		field_map = FIELD_MAP
 
 	dst_keys = {
 		_gather_field_values(
