@@ -1,4 +1,4 @@
-__all__ = ['compare_item_collections']
+__all__ = ['find_missing_items']
 
 import audio_metadata
 from multidict import MultiDict
@@ -7,7 +7,9 @@ from .constants import FIELD_MAP
 from .utils import list_to_single_value, normalize_value
 
 
-def _gather_field_values(item, *, fields=None, field_map=FIELD_MAP, normalize_values=False):
+def _gather_field_values(
+	item, *, fields=None, field_map=FIELD_MAP,
+	normalize_values=False):
 	"""Create a tuple of normalized metadata field values.
 
 	Parameter:
@@ -29,7 +31,7 @@ def _gather_field_values(item, *, fields=None, field_map=FIELD_MAP, normalize_va
 		else:
 			fields = list(item.keys())
 
-	normalize = normalize_value if normalize_values else lambda x: str(x)
+	normalize = normalize_values if normalize_values else lambda x: str(x)
 
 	field_values = []
 
@@ -50,7 +52,9 @@ def _gather_field_values(item, *, fields=None, field_map=FIELD_MAP, normalize_va
 	return tuple(field_values)
 
 
-def compare_item_collections(src, dst, *, fields=None, field_map=None, normalize_values=False):
+def find_missing_items(
+	src, dst, *, fields=None, field_map=None,
+	normalize_values=False):
 	"""Find items from an item collection that are not in another item collection.
 
 	Parameters:
@@ -73,12 +77,18 @@ def compare_item_collections(src, dst, *, fields=None, field_map=None, normalize
 
 	dst_keys = {
 		_gather_field_values(
-			dst_item, fields=fields, field_map=field_map, normalize_values=normalize_values
+			dst_item, fields=fields, field_map=field_map,
+			normalize_values=normalize_values
 		) for dst_item in dst
 	}
 
 	for src_item in src:
 		if _gather_field_values(
-			src_item, fields=fields, field_map=field_map, normalize_values=normalize_values
+			src_item, fields=fields, field_map=field_map,
+			normalize_values=normalize_values
 		) not in dst_keys:
 			yield src_item
+
+
+# TODO: Remove on major release.
+compare_item_collections = find_missing_items
