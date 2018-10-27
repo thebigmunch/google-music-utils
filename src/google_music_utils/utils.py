@@ -14,7 +14,7 @@ def normalize_value(value):
 	"""Normalize metadata value to improve match accuracy."""
 
 	value = str(value)
-	value = value.lower()
+	value = value.casefold()
 
 	value = re.sub(r'\/\s*\d+', '', value)  # Remove "/<totaltracks>" from track number.
 	value = re.sub(r'^0+([0-9]+)', r'\1', value)  # Remove leading zero(s) from track number.

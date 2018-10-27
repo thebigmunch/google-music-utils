@@ -19,6 +19,8 @@ This project adheres to [Semantic Versioning](https://semver.org).
 
 * Rename ``compare_item_collections`` to ``find_missing_items``.
   ``compare_item_collections`` alias added for backward compatibility.
+* ``str.casefold()`` is now used to normalize metadata rather than
+  ``str.lower()``. This is friendlier to non-English language.
 
 ### Deprecated
 
