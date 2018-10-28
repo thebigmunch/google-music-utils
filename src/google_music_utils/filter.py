@@ -2,6 +2,7 @@ __all__ = ['exclude_items', 'include_items']
 
 import functools
 import re
+from collections import Mapping
 from itertools import filterfalse
 
 import audio_metadata
@@ -62,8 +63,10 @@ def _match_item(item, any_all=any, ignore_case=False, normalize_values=False, **
 		bool: True if matched, False if not.
 	"""
 
-	if not isinstance(item, (audio_metadata.Format, dict)):
+	if not isinstance(item, Mapping):
 		it = audio_metadata.load(item).tags  # pragma: no cover
+	elif isinstance(item, audio_metadata.Format):
+		it = item.tags
 	else:
 		it = item
 

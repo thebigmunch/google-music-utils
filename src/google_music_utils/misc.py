@@ -7,6 +7,13 @@ from .constants import CHARACTER_REPLACEMENTS, TEMPLATE_PATTERNS
 from .utils import list_to_single_value
 
 
+def _replace_invalid_characters(filepath):
+	for char in CHARACTER_REPLACEMENTS:
+		filepath = filepath.replace(char, CHARACTER_REPLACEMENTS[char])
+
+	return filepath
+
+
 def suggest_filename(metadata):
 	"""Generate a filename like Google for a song based on metadata.
 
@@ -17,18 +24,19 @@ def suggest_filename(metadata):
 		str: A filename string without an extension.
 	"""
 
-	metadata = {k: list_to_single_value(v) for k, v in metadata.items()}
-
 	if 'title' in metadata and 'track_number' in metadata:  # Music Manager.
 		suggested_filename = f"{metadata['track_number']:0>2} {metadata['title']}"
 	elif 'title' in metadata and 'trackNumber' in metadata:  # Mobile.
 		suggested_filename = f"{metadata['trackNumber']:0>2} {metadata['title']}"
-	elif 'title' in metadata and 'tracknumber' in metadata:  # Mutagen.
-		suggested_filename = f"{metadata['tracknumber']:0>2} {metadata['title']}"
-	else:
-		suggested_filename = f"00 {metadata.get('title', '')}"
+	elif 'title' in metadata and 'tracknumber' in metadata:  # audio-metadata/mutagen.
+		track_number = list_to_single_value(metadata['tracknumber'])
+		title = list_to_single_value(metadata['title'])
 
-	return suggested_filename
+		suggested_filename = f"{track_number:0>2} {title}"
+	else:
+		suggested_filename = f"00 {list_to_single_value(metadata.get('title', ['']))}"
+
+	return _replace_invalid_characters(suggested_filename)
 
 
 def _split_track_number(field):
@@ -60,14 +68,12 @@ def _replace_template_patterns(template, metadata, template_patterns):
 				if any(
 					template_patterns[key] == tracknumber_field for tracknumber_field in ['tracknumber', 'track_number']
 				):
-					track_number = list_to_single_value(_split_track_number(str(metadata[template_patterns[key]])))
+					track_number = _split_track_number(str(list_to_single_value(metadata[template_patterns[key]])))
 					metadata[template_patterns[key]] = track_number.zfill(2)
 
-				parts[i] = parts[i].replace(key, metadata[template_patterns[key]])
+				parts[i] = parts[i].replace(key, list_to_single_value(metadata[template_patterns[key]]))
 
-		for char in CHARACTER_REPLACEMENTS:
-			if char in parts[i]:
-				parts[i] = parts[i].replace(char, CHARACTER_REPLACEMENTS[char])
+		parts[i] = _replace_invalid_characters(parts[i])
 
 	if os.path.isabs(template):
 		if drive:
@@ -97,9 +103,6 @@ def template_to_filepath(template, metadata, template_patterns=None):
 
 	if template_patterns is None:
 		template_patterns = TEMPLATE_PATTERNS
-
-	metadata = {k: list_to_single_value(v) for k, v in metadata.items()}
-	assert isinstance(metadata, dict)
 
 	suggested_filename = suggest_filename(metadata)
 

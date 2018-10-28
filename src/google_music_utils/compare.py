@@ -1,6 +1,7 @@
 __all__ = ['compare_item_collections', 'find_existing_items', 'find_missing_items']
 
 import audio_metadata
+from collections import Mapping
 from multidict import MultiDict
 
 from .constants import FIELD_MAP
@@ -27,8 +28,10 @@ def _gather_field_values(
 		tuple: Values from the given metadata fields.
 	"""
 
-	if not isinstance(item, (audio_metadata.Format, dict)):
+	if not isinstance(item, Mapping):
 		item = audio_metadata.load(item).tags  # pragma: no cover
+	elif isinstance(item, audio_metadata.Format):
+		item = item.tags
 
 	if fields is None:
 		if hasattr(item, 'FIELD_MAP'):
