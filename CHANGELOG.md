@@ -6,12 +6,18 @@ This project adheres to [Semantic Versioning](https://semver.org).
 
 ## [Unreleased](https://github.com/thebigmunch/google-music-utils/tree/master)
 
-[Commits](https://github.com/thebigmunch/google-music-utils/compare/1.0.0...master)
+[Commits](https://github.com/thebigmunch/google-music-utils/compare/1.1.0...master)
+
+
+
+## [1.1.0](https://github.com/thebigmunch/google-music-utils/releases/tag/1.1.0) (2018-10-28)
+
+[Commits](https://github.com/thebigmunch/google-music-utils/compare/1.0.0...1.1.0)
 
 ### Added
 
-* Add ``find_existing_items`` for finding items common to two item collections.
-* Add ``normalize_func`` parameter to compare module functions to allow custom
+* ``find_existing_items`` for finding items common to two item collections.
+* ``normalize_func`` parameter to compare module functions to allow custom
   field value normalization when ``normalize_values`` is ``True``.
   The default normalization function remains the same.
 
@@ -29,7 +35,6 @@ This project adheres to [Semantic Versioning](https://semver.org).
 ### Fixed
 
 * Properly support audio-metadata.
-
 
 
 ## [1.0.0](https://github.com/thebigmunch/google-music-utils/releases/tag/1.0.0) (2018-10-19)
