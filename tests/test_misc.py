@@ -1,4 +1,5 @@
 import os
+import sys
 
 import pytest
 from google_music_utils.misc import suggest_filename, template_to_filepath
@@ -35,24 +36,38 @@ def test_misc_suggest_filename(metadata, expected):
 			{'artist': 'Marian Hill', 'album': 'Sway', 'tracknumber': '1/7', 'title': 'One Time'},
 			os.path.join('Marian Hill', 'Sway', '01 - One Time')
 		),
-		# (
-		# 	'C:/%artist%/%album%/%tracknumber% - %title%',
-		# 	{'artist': 'Marian Hill', 'album': 'Sway', 'tracknumber': '1/7', 'title': 'One Time'},
-		# 	os.path.join('C:\\', 'Marian Hill', 'Sway', '01 - One Time')
-		# ),
 		(
 			'%artist%/%album%/%tracknumber% - %title%',
 			{'artist': 'Marian Hill', 'album': 'Sway?', 'tracknumber': '1', 'title': 'One Time'},
 			os.path.join('Marian Hill', 'Sway', '01 - One Time')
 		),
-		# (
-		# 	'/%artist%/%album%/%tracknumber% - %title%',
-		# 	{'artist': 'Marian Hill', 'album': 'Sway', 'tracknumber': '1', 'title': 'One Time'},
-		# 	os.path.join('\\', 'Marian Hill', 'Sway', '01 - One Time')
-		# )
+		(
+			'/%artist%/%album%/%tracknumber% - %title%',
+			{'artist': 'Marian Hill', 'album': 'Sway', 'tracknumber': '1', 'title': 'One Time'},
+			os.path.join('/', 'Marian Hill', 'Sway', '01 - One Time')
+		),
+		(
+			'C:/%artist%/%album%/%tracknumber% - %title%',
+			{'artist': 'Marian Hill', 'album': 'Sway', 'tracknumber': '1/7', 'title': 'One Time'},
+			os.path.join('C:\\', 'Marian Hill', 'Sway', '01 - One Time')
+		),
+		(
+			'/%artist%/%album%/%tracknumber% - %title%',
+			{'artist': 'Marian Hill', 'album': 'Sway', 'tracknumber': '1', 'title': 'One Time'},
+			os.path.join('\\', 'Marian Hill', 'Sway', '01 - One Time')
+		)
 	]
 )
 def test_misc_template_to_filepath_default_patterns(template, metadata, expected):
+	if not sys.platform.startswith('win'):
+		if template.startswith('C:/'):
+			pytest.skip("Skipping Windows-only test.")
+
+		if template.startswith('/') and expected.startswith('\\'):
+			pytest.skip("Skipping Windows-only test.")
+	elif template.startswith('/') and expected.startswith('/'):
+		pytest.skip("Skipping non-Windows test.")
+
 	assert template_to_filepath(template, metadata) == expected
 
 
