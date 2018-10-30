@@ -7,16 +7,30 @@ language: python
 
 matrix:
   include:
-    - python: "3.6"
-      env: TOXENV=py36
     - python: "pypy3"
       env: TOXENV=pypy3
-
-    #Meta
     - python: "3.6"
-      env: TOXENV=flake8
+      env: TOXENV=py36
+    - python: "3.7"
+      env: TOXENV=py37
+      dist: xenial
+      sudo: true
+
+    # Prevent breakage on new releases
+    - python: "3.6-dev"
+      env: TOXENV=py36
+    - python: "3.7-dev"
+      env: TOXENV=py37
+
+    # Meta
+    - python: "3.6"
+      env: TOXENV=lint
     - python: "3.6"
       env: TOXENV=docs
+
+allow_failures:
+  - python: "3.6-dev"
+  - python: "3.7-dev"
 
 install:
   - pip install tox

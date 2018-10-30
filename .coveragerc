@@ -5,7 +5,8 @@ source = google_music_utils
 [paths]
 source =
 	src/google_music_utils
-	*/site-packages/google_music_utils
+	.tox/*/lib/python*/site-packages/google_music_utils
+	.tox/pypy/site-packages/google_music_utils
 
 [report]
 precision = 2

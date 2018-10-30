@@ -1,7 +1,8 @@
 __all__ = ['compare_item_collections', 'find_existing_items', 'find_missing_items']
 
+from collections.abc import Mapping
+
 import audio_metadata
-from collections import Mapping
 from multidict import MultiDict
 
 from .constants import FIELD_MAP
@@ -29,7 +30,7 @@ def _gather_field_values(
 	"""
 
 	if not isinstance(item, Mapping):
-		item = audio_metadata.load(item).tags  # pragma: no cover
+		item = audio_metadata.load(item).tags
 	elif isinstance(item, audio_metadata.Format):
 		item = item.tags
 
@@ -48,13 +49,13 @@ def _gather_field_values(
 			field_values.append(normalize(list_to_single_value(item[field])))
 		elif isinstance(field_map, MultiDict):
 			for alias in field_map.getall(field, []):
-				if item.get(alias):  # pragma: no branch
+				if item.get(alias):
 					field_values.append(normalize(list_to_single_value(item[alias])))
 					break
-		elif isinstance(field_map, dict):  # pragma: no branch
+		elif isinstance(field_map, dict):
 			alias = field_map.get(field)
 
-			if alias in item:  # pragma: no branch
+			if alias in item:
 				field_values.append(normalize(list_to_single_value(item[alias])))
 
 	return tuple(field_values)

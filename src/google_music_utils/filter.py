@@ -2,7 +2,7 @@ __all__ = ['exclude_items', 'include_items']
 
 import functools
 import re
-from collections import Mapping
+from collections.abc import Mapping
 from itertools import filterfalse
 
 import audio_metadata
@@ -29,7 +29,7 @@ def _match_field(field_value, pattern, ignore_case=False, normalize_values=False
 		bool: True if matched, False if not.
 	"""
 
-	if normalize_values:  # pragma: no cover
+	if normalize_values:  # pragma: no branch
 		ignore_case = True
 
 	normalize = normalize_value if normalize_values else lambda x: str(x)
@@ -64,7 +64,7 @@ def _match_item(item, any_all=any, ignore_case=False, normalize_values=False, **
 	"""
 
 	if not isinstance(item, Mapping):
-		it = audio_metadata.load(item).tags  # pragma: no cover
+		it = audio_metadata.load(item).tags
 	elif isinstance(item, audio_metadata.Format):
 		it = item.tags
 	else:

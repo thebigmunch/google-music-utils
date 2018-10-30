@@ -33,6 +33,20 @@ setup(
 		'wrapt>=1.10'
 	],
 
+	extras_requires={
+		'doc': ['sphinx'],
+		'lint': [
+			'flake8',
+			'flake8-builtins',
+			'flake8-import-order',
+			'flake8-import-order-tbm'
+		],
+		'test': [
+			'coverage',
+			'pytest'
+		]
+	},
+
 	packages=find_packages('src'),
 	package_dir={
 		'': 'src'
