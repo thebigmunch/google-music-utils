@@ -35,21 +35,21 @@ def test_misc_suggest_filename(metadata, expected):
 			{'artist': 'Marian Hill', 'album': 'Sway', 'tracknumber': '1/7', 'title': 'One Time'},
 			os.path.join('Marian Hill', 'Sway', '01 - One Time')
 		),
-		(
-			'C:/%artist%/%album%/%tracknumber% - %title%',
-			{'artist': 'Marian Hill', 'album': 'Sway', 'tracknumber': '1/7', 'title': 'One Time'},
-			os.path.join('C:\\', 'Marian Hill', 'Sway', '01 - One Time')
-		),
+		# (
+		# 	'C:/%artist%/%album%/%tracknumber% - %title%',
+		# 	{'artist': 'Marian Hill', 'album': 'Sway', 'tracknumber': '1/7', 'title': 'One Time'},
+		# 	os.path.join('C:\\', 'Marian Hill', 'Sway', '01 - One Time')
+		# ),
 		(
 			'%artist%/%album%/%tracknumber% - %title%',
 			{'artist': 'Marian Hill', 'album': 'Sway?', 'tracknumber': '1', 'title': 'One Time'},
 			os.path.join('Marian Hill', 'Sway', '01 - One Time')
 		),
-		(
-			'/%artist%/%album%/%tracknumber% - %title%',
-			{'artist': 'Marian Hill', 'album': 'Sway', 'tracknumber': '1', 'title': 'One Time'},
-			os.path.join('\\', 'Marian Hill', 'Sway', '01 - One Time')
-		)
+		# (
+		# 	'/%artist%/%album%/%tracknumber% - %title%',
+		# 	{'artist': 'Marian Hill', 'album': 'Sway', 'tracknumber': '1', 'title': 'One Time'},
+		# 	os.path.join('\\', 'Marian Hill', 'Sway', '01 - One Time')
+		# )
 	]
 )
 def test_misc_template_to_filepath_default_patterns(template, metadata, expected):
