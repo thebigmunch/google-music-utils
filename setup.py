@@ -33,7 +33,7 @@ setup(
 		'wrapt>=1.10'
 	],
 
-	extras_requires={
+	extras_require={
 		'doc': ['sphinx'],
 		'lint': [
 			'flake8',
