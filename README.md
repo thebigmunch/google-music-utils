@@ -16,7 +16,8 @@ set of utility functionality for google-music and related projects.
 
 ## Usage
 
-See the [docs](https://google-music-utils.readthedocs.io).
+For the release version, see the [stable docs](https://google-music-utils.readthedocs.io/en/stable/).  
+For the development version, see the [latest docs](https://google-music-utils.readthedocs.io/en/latest/).
 
 
 ## Appreciation
