@@ -50,7 +50,7 @@ def _match_item(item, any_all=any, ignore_case=False, normalize_values=False, **
 		so ``ignore_case`` is automatically set to ``True``.
 
 	Parameters:
-		item (dict): Item dict or filepath.
+		item (~collections.abc.Mapping, str, os.Pathlike): Item dict or filepath.
 		any_all (callable): A callable to determine if any or all filters must match to match item.
 			Expected values :obj:`any` (default) or :obj:`all`.
 		ignore_case (bool): Perform case-insensitive matching.
@@ -85,14 +85,14 @@ def exclude_items(items, any_all=any, ignore_case=False, normalize_values=False,
 		so ``ignore_case`` is automatically set to ``True``.
 
 	Parameters:
-		items (list): A sequence of item dicts or filepaths.
+		items (list): A list of item dicts or filepaths.
 		any_all (callable): A callable to determine if any or all filters must match to exclude items.
 			Expected values :obj:`any` (default) or :obj:`all`.
 		ignore_case (bool): Perform case-insensitive matching.
 			Default: ``False``
 		normalize_values (bool): Normalize metadata values to remove common differences between sources.
 			Default: ``False``
-		kwargs (list): Sequences of values to match the given metadata field.
+		kwargs (list): Lists of values to match the given metadata field.
 
 	Yields:
 		dict: The next item to be included.
@@ -120,14 +120,14 @@ def include_items(items, any_all=any, ignore_case=False, normalize_values=False,
 		so ``ignore_case`` is automatically set to ``True``.
 
 	Parameters:
-		items (list): A sequence of item dicts or filepaths.
+		items (list): A list of item dicts or filepaths.
 		any_all (callable): A callable to determine if any or all filters must match to include items.
 			Expected values :obj:`any` (default) or :obj:`all`.
 		ignore_case (bool): Perform case-insensitive matching.
 			Default: ``False``
 		normalize_values (bool): Normalize metadata values to remove common differences between sources.
 			Default: ``False``
-		kwargs (list): Sequences of values to match the given metadata field.
+		kwargs (list): Lists of values to match the given metadata field.
 
 	Yields:
 		dict: The next item to be included.

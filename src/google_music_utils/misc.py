@@ -18,7 +18,7 @@ def suggest_filename(metadata):
 	"""Generate a filename like Google for a song based on metadata.
 
 	Parameters:
-		metadata (dict): A metadata dict.
+		metadata (~collections.abc.Mapping): A metadata dict.
 
 	Returns:
 		str: A filename string without an extension.
@@ -92,9 +92,9 @@ def template_to_filepath(template, metadata, template_patterns=None):
 	Parameters:
 		template (str): A filepath which can include template patterns as defined by :param template_patterns:.
 
-		metadata (dict): A metadata dict.
+		metadata (~collections.abc.Mapping): A metadata dict.
 
-		template_patterns (dict): A dict of ``pattern: field`` pairs used to replace patterns with metadata field values.
+		template_patterns (~collections.abc.Mapping): A dict of ``pattern: field`` pairs used to replace patterns with metadata field values.
 			Default: :const:`~google_music_utils.constants.TEMPLATE_PATTERNS`
 
 	Returns:

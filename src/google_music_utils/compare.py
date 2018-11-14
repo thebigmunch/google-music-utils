@@ -15,8 +15,8 @@ def _gather_field_values(
 	"""Create a tuple of normalized metadata field values.
 
 	Parameter:
-		item (dict): Item dict or filepath.
-		fields (list): A sequence of fields used to compare item dicts.
+		item (~collections.abc.Mapping, str, os.PathLike): Item dict or filepath.
+		fields (list): A list of fields used to compare item dicts.
 		field_map (~collections.abc.Mapping): A mapping field name aliases.
 			Default: :data:`~google_music_utils.constants.FIELD_MAP`
 		normalize_values (bool): Normalize metadata values to remove common differences between sources.
@@ -67,9 +67,9 @@ def find_existing_items(
 	"""Find items from an item collection that are in another item collection.
 
 	Parameters:
-		src (list): A sequence of item dicts or filepaths.
-		dst (list): A sequence of item dicts or filepaths.
-		fields (list): A sequence of fields used to compare item dicts.
+		src (list): A list of item dicts or filepaths.
+		dst (list): A list of item dicts or filepaths.
+		fields (list): A list of fields used to compare item dicts.
 		field_map (~collections.abc.Mapping): A mapping field name aliases.
 			Default: :data:`~google_music_utils.constants.FIELD_MAP`
 		normalize_values (bool): Normalize metadata values to remove common differences between sources.
@@ -106,9 +106,9 @@ def find_missing_items(
 	"""Find items from an item collection that are not in another item collection.
 
 	Parameters:
-		src (list): A sequence of item dicts or filepaths.
-		dst (list): A sequence of item dicts or filepaths.
-		fields (list): A sequence of fields used to compare item dicts.
+		src (list): A list of item dicts or filepaths.
+		dst (list): A list of item dicts or filepaths.
+		fields (list): A list of fields used to compare item dicts.
 		field_map (~collections.abc.Mapping): A mapping field name aliases.
 			Default: :data:`~google_music_utils.constants.FIELD_MAP`
 		normalize_values (bool): Normalize metadata values to remove common differences between sources.
