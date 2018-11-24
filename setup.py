@@ -28,7 +28,7 @@ setup(
 	],
 
 	install_requires=[
-		'audio-metadata>=0.1',
+		'audio-metadata>=0.2',
 		'multidict>=4.0',
 		'wrapt>=1.10'
 	],
