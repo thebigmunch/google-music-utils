@@ -6,8 +6,16 @@ This project adheres to [Semantic Versioning](https://semver.org).
 
 ## [Unreleased](https://github.com/thebigmunch/google-music-utils/tree/master)
 
-[Commits](https://github.com/thebigmunch/google-music-utils/compare/1.1.0...master)
+[Commits](https://github.com/thebigmunch/google-music-utils/compare/1.1.1...master)
 
+
+## [1.1.1](https://github.com/thebigmunch/google-music-utils/releases/tag/1.1.1) (2018-11-28)
+
+[Commits](https://github.com/thebigmunch/google-music-utils/compare/1.1.0...1.1.1)
+
+### Fixed
+
+* Forgot to update ``audio-metadata`` dependency in pyproject.toml.
 
 
 ## [1.1.0](https://github.com/thebigmunch/google-music-utils/releases/tag/1.1.0) (2018-10-28)
