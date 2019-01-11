@@ -1,6 +1,6 @@
 # google-music-utils
 
-[![Travis (.org)](https://img.shields.io/travis/thebigmunch/google-music-utils.svg)](https:/travis-ci.org/thebigmunch/google-music-utils)
+[![Travis](https://img.shields.io/travis/thebigmunch/google-music-utils.svg)](https://travis-ci.org/thebigmunch/google-music-utils)
 [![Codecov](https://img.shields.io/codecov/c/github/thebigmunch/google-music-utils.svg)](https://codecov.io/gh/thebigmunch/google-music-utils)
 [![Read the Docs](https://img.shields.io/readthedocs/google-music-utils.svg)](https://google-music-utils.readthedocs.io)
 
