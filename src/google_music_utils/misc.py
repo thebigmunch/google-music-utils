@@ -109,7 +109,9 @@ def template_to_filepath(template, metadata, template_patterns=None):
 		filepath = Path(*parts)
 	elif '%suggested%' in template:
 		filepath = Path(template.replace('%suggested%', suggested_filename))
-	else:
+	elif template.endswith(('/', '\\')):
 		filepath = path / suggested_filename
+	else:
+		filepath = path
 
 	return filepath

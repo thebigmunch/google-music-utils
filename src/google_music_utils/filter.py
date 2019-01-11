@@ -29,7 +29,7 @@ def _match_field(field_value, pattern, ignore_case=False, normalize_values=False
 		bool: True if matched, False if not.
 	"""
 
-	if normalize_values:  # pragma: no branch
+	if normalize_values:
 		ignore_case = True
 
 	normalize = normalize_value if normalize_values else lambda x: str(x)

@@ -52,7 +52,7 @@ def _gather_field_values(
 				if item.get(alias):
 					field_values.append(normalize(list_to_single_value(item[alias])))
 					break
-		elif isinstance(field_map, dict):
+		elif isinstance(field_map, Mapping):
 			alias = field_map.get(field)
 
 			if alias in item:
