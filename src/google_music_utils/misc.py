@@ -54,7 +54,7 @@ def template_to_filepath(template, metadata, template_patterns=None):
 	names should have a trailing slash or backslash.
 
 	Parameters:
-		template (str or os.PathLike): A filepath which can include template patterns as defined by :param template_patterns:.
+		template (str or ~os.PathLike): A filepath which can include template patterns as defined by :param template_patterns:.
 
 		metadata (~collections.abc.Mapping): A metadata dict.
 
@@ -62,7 +62,7 @@ def template_to_filepath(template, metadata, template_patterns=None):
 			Default: :const:`~google_music_utils.constants.TEMPLATE_PATTERNS`
 
 	Returns:
-		str: A filepath.
+		~pathlib.Path: A filepath.
 	"""
 
 	path = Path(template)
