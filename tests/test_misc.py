@@ -1,5 +1,5 @@
-import os
 import sys
+from pathlib import Path
 
 import pytest
 from google_music_utils.misc import suggest_filename, template_to_filepath
@@ -24,37 +24,37 @@ def test_misc_suggest_filename(metadata, expected):
 		(
 			'%suggested%',
 			{'artist': 'Marian Hill', 'album': 'Sway', 'tracknumber': '1', 'title': 'One Time'},
-			'01 One Time'
+			Path('01 One Time')
 		),
 		(
 			'%artist%/%album%/%tracknumber% - %title%',
 			{'artist': 'Marian Hill', 'album': 'Sway', 'tracknumber': '1', 'title': 'One Time'},
-			os.path.join('Marian Hill', 'Sway', '01 - One Time')
+			Path('Marian Hill', 'Sway', '01 - One Time')
 		),
 		(
 			'%artist%/%album%/%tracknumber% - %title%',
 			{'artist': 'Marian Hill', 'album': 'Sway', 'tracknumber': '1/7', 'title': 'One Time'},
-			os.path.join('Marian Hill', 'Sway', '01 - One Time')
+			Path('Marian Hill', 'Sway', '01 - One Time')
 		),
 		(
 			'%artist%/%album%/%tracknumber% - %title%',
 			{'artist': 'Marian Hill', 'album': 'Sway?', 'tracknumber': '1', 'title': 'One Time'},
-			os.path.join('Marian Hill', 'Sway', '01 - One Time')
+			Path('Marian Hill', 'Sway', '01 - One Time')
 		),
 		(
 			'/%artist%/%album%/%tracknumber% - %title%',
 			{'artist': 'Marian Hill', 'album': 'Sway', 'tracknumber': '1', 'title': 'One Time'},
-			os.path.join('/', 'Marian Hill', 'Sway', '01 - One Time')
+			Path('/', 'Marian Hill', 'Sway', '01 - One Time')
 		),
 		(
 			'C:/%artist%/%album%/%tracknumber% - %title%',
 			{'artist': 'Marian Hill', 'album': 'Sway', 'tracknumber': '1/7', 'title': 'One Time'},
-			os.path.join('C:\\', 'Marian Hill', 'Sway', '01 - One Time')
+			Path('C:\\', 'Marian Hill', 'Sway', '01 - One Time')
 		),
 		(
 			'/%artist%/%album%/%tracknumber% - %title%',
 			{'artist': 'Marian Hill', 'album': 'Sway', 'tracknumber': '1', 'title': 'One Time'},
-			os.path.join('\\', 'Marian Hill', 'Sway', '01 - One Time')
+			Path('\\', 'Marian Hill', 'Sway', '01 - One Time')
 		)
 	]
 )
@@ -63,9 +63,9 @@ def test_misc_template_to_filepath_default_patterns(template, metadata, expected
 		if template.startswith('C:/'):
 			pytest.skip("Skipping Windows-only test.")
 
-		if template.startswith('/') and expected.startswith('\\'):
+		if template.startswith('/') and str(expected).startswith('\\'):
 			pytest.skip("Skipping Windows-only test.")
-	elif template.startswith('/') and expected.startswith('/'):
+	elif template.startswith('/') and str(expected).startswith('/'):
 		pytest.skip("Skipping non-Windows test.")
 
 	assert template_to_filepath(template, metadata) == expected
@@ -77,7 +77,7 @@ def test_misc_template_to_filepath_default_patterns(template, metadata, expected
 		(
 			'%art%/%alb%/%track% - %tit%',
 			{'artist': 'Marian Hill', 'album': 'Sway', 'tracknumber': '1', 'title': 'One Time'},
-			os.path.join('Marian Hill', 'Sway', '01 - One Time')
+			Path('Marian Hill', 'Sway', '01 - One Time')
 		)
 	]
 )
