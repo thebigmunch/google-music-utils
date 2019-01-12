@@ -12,6 +12,10 @@ This project adheres to [Semantic Versioning](https://semver.org).
 
 * ``template_to_filepath`` now returns a ``pathlib.Path`` object instead of a ``str``.
 
+### Removed
+
+* ``compare_item_collections``
+
 
 ## [1.1.1](https://github.com/thebigmunch/google-music-utils/releases/tag/1.1.1) (2018-11-28)
 

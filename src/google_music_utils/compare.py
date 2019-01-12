@@ -1,4 +1,4 @@
-__all__ = ['compare_item_collections', 'find_existing_items', 'find_missing_items']
+__all__ = ['find_existing_items', 'find_missing_items']
 
 import os
 from collections.abc import Mapping
@@ -140,7 +140,3 @@ def find_missing_items(
 			normalize_values=normalize_values, normalize_func=normalize_func
 		) not in dst_keys:
 			yield src_item
-
-
-# TODO: Remove on major release.
-compare_item_collections = find_missing_items
