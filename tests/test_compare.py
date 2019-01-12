@@ -1,180 +1,261 @@
-# TODO: Add metadata normalization tests.
-# TODO: Add find_existing_items tests.
-
 from google_music_utils import find_existing_items, find_missing_items
+from google_music_utils.compare import _gather_field_values
 
-from .fixtures import TEST_COLLECTION_1, TEST_COLLECTION_2, TEST_COLLECTION_3
-
-
-def test_no_fields_same():
-	existing = list(find_existing_items(TEST_COLLECTION_1, TEST_COLLECTION_1))
-	expected_existing = TEST_COLLECTION_1
-
-	missing = list(find_missing_items(TEST_COLLECTION_1, TEST_COLLECTION_1))
-	expected_missing = []
-
-	assert existing == expected_existing
-	assert missing == expected_missing
+from .fixtures import (
+	TEST_FORMAT_1,
+	TEST_MAPPING_1,
+	TEST_MAPPING_2,
+	TEST_MAPPING_ITEMS_1,
+	TEST_MAPPING_ITEMS_2,
+	TEST_MAPPING_ITEMS_3,
+	TEST_PATH_1,
+)
 
 
-def test_no_fields_different():
-	existing = list(find_existing_items(TEST_COLLECTION_2, TEST_COLLECTION_3))
-	expected_existing = []
-
-	missing = list(find_missing_items(TEST_COLLECTION_2, TEST_COLLECTION_3))
-	expected_missing = TEST_COLLECTION_2
-
-	assert existing == expected_existing
-	assert missing == expected_missing
+class TestGatherFieldValues:
+	def test_inputs(self):
+		_gather_field_values(TEST_FORMAT_1)
+		_gather_field_values(TEST_MAPPING_1)
+		_gather_field_values(TEST_PATH_1)
 
 
-def test_no_fields_partial():
-	existing = list(find_existing_items(TEST_COLLECTION_1, TEST_COLLECTION_2))
-	expected_existing = [TEST_COLLECTION_1[0]]
-
-	missing = list(find_missing_items(TEST_COLLECTION_1, TEST_COLLECTION_2))
-	expected_missing = [TEST_COLLECTION_1[1]]
-
-	assert existing == expected_existing
-	assert missing == expected_missing
-
-
-def test_fields_same():
-	existing = list(
-		find_existing_items(
-			TEST_COLLECTION_1, TEST_COLLECTION_1, fields=['artist', 'album']
+class TestExistingItems:
+	def test_no_fields_same(self):
+		existing = list(
+			find_existing_items(
+				TEST_MAPPING_ITEMS_1,
+				TEST_MAPPING_ITEMS_1
+			)
 		)
-	)
-	expected_existing = TEST_COLLECTION_1
+		expected = TEST_MAPPING_ITEMS_1
 
-	missing = list(
-		find_missing_items(
-			TEST_COLLECTION_1, TEST_COLLECTION_1, fields=['artist', 'album']
+		assert existing == expected
+
+	def test_no_fields_different(self):
+		existing = list(
+			find_existing_items(
+				TEST_MAPPING_ITEMS_2,
+				TEST_MAPPING_ITEMS_3
+			)
 		)
-	)
-	expected_missing = []
+		expected = []
 
-	assert existing == expected_existing
-	assert missing == expected_missing
+		assert existing == expected
 
-
-def test_fields_different():
-	existing = list(
-		find_existing_items(
-			TEST_COLLECTION_2, TEST_COLLECTION_3, fields=['artist', 'album']
+	def test_no_fields_partial(self):
+		existing = list(
+			find_existing_items(
+				TEST_MAPPING_ITEMS_1,
+				TEST_MAPPING_ITEMS_2
+			)
 		)
-	)
-	expected_existing = []
+		expected = [TEST_MAPPING_1]
 
-	missing = list(
-		find_missing_items(
-			TEST_COLLECTION_2, TEST_COLLECTION_3, fields=['artist', 'album']
+		assert existing == expected
+
+	def test_fields_same(self):
+		existing = list(
+			find_existing_items(
+				TEST_MAPPING_ITEMS_1,
+				TEST_MAPPING_ITEMS_1,
+				fields=['artist', 'album']
+			)
 		)
-	)
-	expected_missing = TEST_COLLECTION_2
+		expected = TEST_MAPPING_ITEMS_1
 
-	assert existing == expected_existing
-	assert missing == expected_missing
+		assert existing == expected
 
-
-def test_fields_partial():
-	existing = list(
-		find_existing_items(
-			TEST_COLLECTION_1, TEST_COLLECTION_2, fields=['artist', 'title']
+	def test_fields_different(self):
+		existing = list(
+			find_existing_items(
+				TEST_MAPPING_ITEMS_2,
+				TEST_MAPPING_ITEMS_3,
+				fields=['artist', 'album']
+			)
 		)
-	)
-	expected_existing = [TEST_COLLECTION_1[0]]
+		expected = []
 
-	missing = list(
-		find_missing_items(
-			TEST_COLLECTION_1, TEST_COLLECTION_2, fields=['artist', 'title']
+		assert existing == expected
+
+	def test_fields_partial(self):
+		existing = list(
+			find_existing_items(
+				TEST_MAPPING_ITEMS_1,
+				TEST_MAPPING_ITEMS_2,
+				fields=['artist', 'title']
+			)
 		)
-	)
-	expected_missing = [TEST_COLLECTION_1[1]]
+		expected = [TEST_MAPPING_1]
 
-	assert existing == expected_existing
-	assert missing == expected_missing
+		assert existing == expected
 
-
-def test_default_field_map():
-	existing = list(
-		find_existing_items(
-			TEST_COLLECTION_1, TEST_COLLECTION_2, fields=['tracknumber']
+	def test_default_field_map(self):
+		existing = list(
+			find_existing_items(
+				TEST_MAPPING_ITEMS_1,
+				TEST_MAPPING_ITEMS_2,
+				fields=['tracknumber']
+			)
 		)
-	)
-	expected_existing = [TEST_COLLECTION_1[0]]
+		expected = [TEST_MAPPING_1]
 
-	missing = list(
-		find_missing_items(
-			TEST_COLLECTION_1, TEST_COLLECTION_2, fields=['tracknumber']
+		assert existing == expected
+
+	def test_default_field_map_no_exist(self):
+		existing = list(
+			find_existing_items(
+				TEST_MAPPING_ITEMS_1,
+				TEST_MAPPING_ITEMS_2,
+				fields=['tracknumber', 'noexist']
+			)
 		)
-	)
-	expected_missing = [TEST_COLLECTION_1[1]]
+		expected = [TEST_MAPPING_1]
 
-	assert existing == expected_existing
-	assert missing == expected_missing
+		assert existing == expected
 
-
-def test_default_field_map_no_exist():
-	existing = list(
-		find_existing_items(
-			TEST_COLLECTION_1, TEST_COLLECTION_2,
-			fields=['tracknumber', 'noexist']
+	def test_custom_field_map(self):
+		existing = list(
+			find_existing_items(
+				TEST_MAPPING_ITEMS_1,
+				TEST_MAPPING_ITEMS_2,
+				fields=['tracknumber'],
+				field_map={'tracknumber': 'track_number'}
+			)
 		)
-	)
-	expected_existing = [TEST_COLLECTION_1[0]]
+		expected = [TEST_MAPPING_1]
 
-	missing = list(
-		find_missing_items(
-			TEST_COLLECTION_1, TEST_COLLECTION_2,
-			fields=['tracknumber', 'noexist']
+		assert existing == expected
+
+	def test_custom_field_map_no_exist(self):
+		existing = list(
+			find_existing_items(
+				TEST_MAPPING_ITEMS_1,
+				TEST_MAPPING_ITEMS_2,
+				fields=['tracknumber'],
+				field_map={'tracknumber': 'track_number', 'noexist': 'no_exist'}
+			)
 		)
-	)
-	expected_missing = [TEST_COLLECTION_1[1]]
+		expected = [TEST_MAPPING_1]
 
-	assert existing == expected_existing
-	assert missing == expected_missing
+		assert existing == expected
 
 
-def test_custom_field_map():
-	existing = list(
-		find_existing_items(
-			TEST_COLLECTION_1, TEST_COLLECTION_2,
-			fields=['tracknumber'], field_map={'tracknumber': 'track_number'}
+class TestMissingItems:
+	def test_no_fields_same(self):
+		missing = list(
+			find_missing_items(
+				TEST_MAPPING_ITEMS_1,
+				TEST_MAPPING_ITEMS_1
+			)
 		)
-	)
-	expected_existing = [TEST_COLLECTION_1[0]]
+		expected = []
 
-	missing = list(
-		find_missing_items(
-			TEST_COLLECTION_1, TEST_COLLECTION_2,
-			fields=['tracknumber'], field_map={'tracknumber': 'track_number'}
+		assert missing == expected
+
+	def test_no_fields_different(self):
+		missing = list(
+			find_missing_items(
+				TEST_MAPPING_ITEMS_2,
+				TEST_MAPPING_ITEMS_3
+			)
 		)
-	)
-	expected_missing = [TEST_COLLECTION_1[1]]
+		expected = TEST_MAPPING_ITEMS_2
 
-	assert existing == expected_existing
-	assert missing == expected_missing
+		assert missing == expected
 
-
-def test_custom_field_map_no_exist():
-	existing = list(
-		find_existing_items(
-			TEST_COLLECTION_1, TEST_COLLECTION_2,
-			fields=['tracknumber'],
-			field_map={'tracknumber': 'track_number', 'noexist': 'no_exist'}
+	def test_no_fields_partial(self):
+		missing = list(
+			find_missing_items(
+				TEST_MAPPING_ITEMS_1,
+				TEST_MAPPING_ITEMS_2
+			)
 		)
-	)
-	expected_existing = [TEST_COLLECTION_1[0]]
+		expected = [TEST_MAPPING_2]
 
-	missing = list(
-		find_missing_items(
-			TEST_COLLECTION_1, TEST_COLLECTION_2,
-			fields=['tracknumber'],
-			field_map={'tracknumber': 'track_number', 'noexist': 'no_exist'}
+		assert missing == expected
+
+	def test_fields_same(self):
+		missing = list(
+			find_missing_items(
+				TEST_MAPPING_ITEMS_1,
+				TEST_MAPPING_ITEMS_1,
+				fields=['artist', 'album']
+			)
 		)
-	)
-	expected_missing = [TEST_COLLECTION_1[1]]
+		expected = []
 
-	assert existing == expected_existing
-	assert missing == expected_missing
+		assert missing == expected
+
+	def test_fields_different(self):
+		missing = list(
+			find_missing_items(
+				TEST_MAPPING_ITEMS_2,
+				TEST_MAPPING_ITEMS_3,
+				fields=['artist', 'album']
+			)
+		)
+		expected = TEST_MAPPING_ITEMS_2
+
+		assert missing == expected
+
+	def test_fields_partial(self):
+		missing = list(
+			find_missing_items(
+				TEST_MAPPING_ITEMS_1,
+				TEST_MAPPING_ITEMS_2,
+				fields=['artist', 'title']
+			)
+		)
+		expected = [TEST_MAPPING_2]
+
+		assert missing == expected
+
+	def test_default_field_map(self):
+		missing = list(
+			find_missing_items(
+				TEST_MAPPING_ITEMS_1,
+				TEST_MAPPING_ITEMS_2,
+				fields=['tracknumber']
+			)
+		)
+		expected = [TEST_MAPPING_2]
+
+		assert missing == expected
+
+	def test_default_field_map_no_exist(self):
+		missing = list(
+			find_missing_items(
+				TEST_MAPPING_ITEMS_1,
+				TEST_MAPPING_ITEMS_2,
+				fields=['tracknumber', 'noexist']
+			)
+		)
+		expected = [TEST_MAPPING_2]
+
+		assert missing == expected
+
+	def test_custom_field_map(self):
+		missing = list(
+			find_missing_items(
+				TEST_MAPPING_ITEMS_1,
+				TEST_MAPPING_ITEMS_2,
+				fields=['tracknumber'],
+				field_map={'tracknumber': 'track_number'}
+			)
+		)
+		expected = [TEST_MAPPING_2]
+
+		assert missing == expected
+
+	def test_custom_field_map_no_exist(self):
+		missing = list(
+			find_missing_items(
+				TEST_MAPPING_ITEMS_1,
+				TEST_MAPPING_ITEMS_2,
+				fields=['tracknumber'],
+				field_map={'tracknumber': 'track_number', 'noexist': 'no_exist'}
+			)
+		)
+		expected = [TEST_MAPPING_2]
+
+		assert missing == expected

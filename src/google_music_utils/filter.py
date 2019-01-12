@@ -1,8 +1,8 @@
 __all__ = ['exclude_items', 'include_items']
 
 import functools
+import os
 import re
-from collections.abc import Mapping
 from itertools import filterfalse
 
 import audio_metadata
@@ -50,7 +50,7 @@ def _match_item(item, any_all=any, ignore_case=False, normalize_values=False, **
 		so ``ignore_case`` is automatically set to ``True``.
 
 	Parameters:
-		item (~collections.abc.Mapping, str, os.Pathlike): Item dict or filepath.
+		item (~collections.abc.Mapping, str, os.PathLike): Item dict or filepath.
 		any_all (callable): A callable to determine if any or all filters must match to match item.
 			Expected values :obj:`any` (default) or :obj:`all`.
 		ignore_case (bool): Perform case-insensitive matching.
@@ -63,7 +63,7 @@ def _match_item(item, any_all=any, ignore_case=False, normalize_values=False, **
 		bool: True if matched, False if not.
 	"""
 
-	if not isinstance(item, Mapping):
+	if isinstance(item, (str, os.PathLike)):
 		it = audio_metadata.load(item).tags
 	elif isinstance(item, audio_metadata.Format):
 		it = item.tags

@@ -1,5 +1,6 @@
 __all__ = ['compare_item_collections', 'find_existing_items', 'find_missing_items']
 
+import os
 from collections.abc import Mapping
 
 import audio_metadata
@@ -29,34 +30,36 @@ def _gather_field_values(
 		tuple: Values from the given metadata fields.
 	"""
 
-	if not isinstance(item, Mapping):
-		item = audio_metadata.load(item).tags
+	if isinstance(item, (str, os.PathLike)):
+		it = audio_metadata.load(item).tags
 	elif isinstance(item, audio_metadata.Format):
-		item = item.tags
+		it = item.tags
+	else:
+		it = item
 
 	if fields is None:
-		if hasattr(item, 'FIELD_MAP'):
-			fields = [item.FIELD_MAP.get(k, k) for k in item]
+		if hasattr(it, 'FIELD_MAP'):
+			fields = [it.FIELD_MAP.get(k, k) for k in it]
 		else:
-			fields = list(item.keys())
+			fields = list(it.keys())
 
 	normalize = normalize_func if normalize_values else lambda x: str(x)
 
 	field_values = []
 
 	for field in fields:
-		if item.get(field):
-			field_values.append(normalize(list_to_single_value(item[field])))
+		if it.get(field):
+			field_values.append(normalize(list_to_single_value(it[field])))
 		elif isinstance(field_map, MultiDict):
 			for alias in field_map.getall(field, []):
-				if item.get(alias):
-					field_values.append(normalize(list_to_single_value(item[alias])))
+				if it.get(alias):  # pragma: no branch
+					field_values.append(normalize(list_to_single_value(it[alias])))
 					break
-		elif isinstance(field_map, Mapping):
+		elif isinstance(field_map, Mapping):  # pragma: no branch
 			alias = field_map.get(field)
 
-			if alias in item:
-				field_values.append(normalize(list_to_single_value(item[alias])))
+			if alias in it:  # pragma: no branch
+				field_values.append(normalize(list_to_single_value(it[alias])))
 
 	return tuple(field_values)
 
