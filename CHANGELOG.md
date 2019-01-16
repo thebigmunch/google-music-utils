@@ -6,7 +6,12 @@ This project adheres to [Semantic Versioning](https://semver.org).
 
 ## [Unreleased](https://github.com/thebigmunch/google-music-utils/tree/master)
 
-[Commits](https://github.com/thebigmunch/google-music-utils/compare/2.0.0...master)
+[Commits](https://github.com/thebigmunch/google-music-utils/compare/2.0.1...master)
+
+
+## [2.0.1](https://github.com/thebigmunch/google-music-utils/releases/tag/2.0.1) (2019-01-16)
+
+[Commits](https://github.com/thebigmunch/google-music-utils/compare/2.0.0...2.0.1)
 
 ### Fixed
 
