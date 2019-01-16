@@ -1,10 +1,9 @@
 # google-music-utils
 
 [![Travis](https://img.shields.io/travis/thebigmunch/google-music-utils.svg?label=Travis)](https://travis-ci.org/thebigmunch/google-music-utils)
-[![Codecov](https://img.shields.io/codecov/c/github/thebigmunch/google-music-utils.svg)](https://codecov.io/gh/thebigmunch/google-music-utils)
-[![Read the Docs - Stable](https://img.shields.io/readthedocs/google-music-utils/stable.svg?label=stable%20docs)](https://google-music-utils.readthedocs.io/en/stable/)
-[![Read the Docs - Latest](https://img.shields.io/readthedocs/google-music-utils/latest.svg?label=latest%20docs)](https://google-music-utils.readthedocs.io/en/latest/)
-
+[![Codecov](https://img.shields.io/codecov/c/github/thebigmunch/google-music-utils.svg?label=Codecov)](https://codecov.io/gh/thebigmunch/google-music-utils)
+[![Read the Docs - Stable](https://img.shields.io/readthedocs/google-music-utils/stable.svg?label=Read%20the%20Docs%20%28Stable%29)](https://google-music-utils.readthedocs.io/en/stable/)
+[![Read the Docs - Latest](https://img.shields.io/readthedocs/google-music-utils/latest.svg?label=Read%20the%20Docs%20%28Latest%29)](https://google-music-utils.readthedocs.io/en/latest/)
 
 
 [google-music-utils](https://github.com/thebigmunch/google-music-utils) is a
