@@ -8,6 +8,10 @@ This project adheres to [Semantic Versioning](https://semver.org).
 
 [Commits](https://github.com/thebigmunch/google-music-utils/compare/2.0.0...master)
 
+### Fixed
+
+* Split track number in ``suggest_filename`` for audio-metadata/mutagen metadata.
+
 
 ## [2.0.0](https://github.com/thebigmunch/google-music-utils/releases/tag/2.0.0) (2019-01-15)
 

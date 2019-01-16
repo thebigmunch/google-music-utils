@@ -14,6 +14,12 @@ def _replace_invalid_characters(filepath):
 	return filepath
 
 
+def _split_track_number(field):
+	match = re.match(r'(\d+)(?:/\d+)?', field)
+
+	return match.group(1) if match else field
+
+
 def suggest_filename(metadata):
 	"""Generate a filename like Google for a song based on metadata.
 
@@ -29,7 +35,11 @@ def suggest_filename(metadata):
 	elif 'title' in metadata and 'trackNumber' in metadata:  # Mobile.
 		suggested_filename = f"{metadata['trackNumber']:0>2} {metadata['title']}"
 	elif 'title' in metadata and 'tracknumber' in metadata:  # audio-metadata/mutagen.
-		track_number = list_to_single_value(metadata['tracknumber'])
+		track_number = _split_track_number(
+			list_to_single_value(
+				metadata['tracknumber']
+			)
+		)
 		title = list_to_single_value(metadata['title'])
 
 		suggested_filename = f"{track_number:0>2} {title}"
@@ -37,12 +47,6 @@ def suggest_filename(metadata):
 		suggested_filename = f"00 {list_to_single_value(metadata.get('title', ['']))}"
 
 	return _replace_invalid_characters(suggested_filename)
-
-
-def _split_track_number(field):
-	match = re.match(r'(\d+)(?:/\d+)?', field)
-
-	return match.group(1) if match else field
 
 
 def template_to_filepath(template, metadata, template_patterns=None):
@@ -94,7 +98,13 @@ def template_to_filepath(template, metadata, template_patterns=None):
 						if any(
 							template_patterns[key] == tracknumber_field for tracknumber_field in ['tracknumber', 'track_number']
 						):
-							track_number = _split_track_number(str(list_to_single_value(metadata[template_patterns[key]])))
+							track_number = _split_track_number(
+								str(
+									list_to_single_value(
+										metadata[template_patterns[key]]
+									)
+								)
+							)
 							metadata[template_patterns[key]] = track_number.zfill(2)
 
 						part = part.replace(
