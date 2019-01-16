@@ -2,6 +2,7 @@ import sys
 from pathlib import Path
 
 import pytest
+from audio_metadata import Tags
 from google_music_utils.misc import suggest_filename, template_to_filepath
 
 
@@ -9,9 +10,11 @@ from google_music_utils.misc import suggest_filename, template_to_filepath
 	'metadata, expected',
 	[
 		({'title': 'One Time', 'tracknumber': '1'}, '01 One Time'),
+		({'title': 'One Time', 'tracknumber': '1/7'}, '01 One Time'),
+		(Tags(**{'title': 'One Time', 'tracknumber': '1/7'}), '01 One Time'),
 		({'title': 'One Time', 'track_number': '1'}, '01 One Time'),
 		({'title': 'One Time', 'trackNumber': '1'}, '01 One Time'),
-		({'title': 'One Time'}, '00 One Time')
+		({'title': 'One Time'}, '00 One Time'),
 	]
 )
 def test_misc_suggest_filename(metadata, expected):
