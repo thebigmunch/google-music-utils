@@ -20,6 +20,7 @@ homepage = "https://github.com/thebigmunch/google-music-utils"
 python = "^3.6"
 
 audio-metadata= "^0.3"
+more-itertools = "^4.0"
 multidict = "^4.0"
 wrapt = "^1.10"
 

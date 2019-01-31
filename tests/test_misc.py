@@ -32,32 +32,37 @@ def test_misc_suggest_filename(metadata, expected):
 		(
 			'%artist%/%album%/%tracknumber% - %title%',
 			{'artist': 'Marian Hill', 'album': 'Sway', 'tracknumber': '1', 'title': 'One Time'},
+			Path('Marian Hill', 'Sway', '1 - One Time')
+		),
+		(
+			'%artist%/%album%/%tracknumber2% - %title%',
+			{'artist': 'Marian Hill', 'album': 'Sway', 'tracknumber': '1', 'title': 'One Time'},
 			Path('Marian Hill', 'Sway', '01 - One Time')
 		),
 		(
 			'%artist%/%album%/%tracknumber% - %title%',
 			{'artist': 'Marian Hill', 'album': 'Sway', 'tracknumber': '1/7', 'title': 'One Time'},
-			Path('Marian Hill', 'Sway', '01 - One Time')
+			Path('Marian Hill', 'Sway', '1 - One Time')
 		),
 		(
 			'%artist%/%album%/%tracknumber% - %title%',
 			{'artist': 'Marian Hill', 'album': 'Sway?', 'tracknumber': '1', 'title': 'One Time'},
-			Path('Marian Hill', 'Sway', '01 - One Time')
+			Path('Marian Hill', 'Sway', '1 - One Time')
 		),
 		(
 			'/%artist%/%album%/%tracknumber% - %title%',
 			{'artist': 'Marian Hill', 'album': 'Sway', 'tracknumber': '1', 'title': 'One Time'},
-			Path('/', 'Marian Hill', 'Sway', '01 - One Time')
+			Path('/', 'Marian Hill', 'Sway', '1 - One Time')
 		),
 		(
 			'C:/%artist%/%album%/%tracknumber% - %title%',
 			{'artist': 'Marian Hill', 'album': 'Sway', 'tracknumber': '1/7', 'title': 'One Time'},
-			Path('C:\\', 'Marian Hill', 'Sway', '01 - One Time')
+			Path('C:\\', 'Marian Hill', 'Sway', '1 - One Time')
 		),
 		(
 			'/%artist%/%album%/%tracknumber% - %title%',
 			{'artist': 'Marian Hill', 'album': 'Sway', 'tracknumber': '1', 'title': 'One Time'},
-			Path('\\', 'Marian Hill', 'Sway', '01 - One Time')
+			Path('\\', 'Marian Hill', 'Sway', '1 - One Time')
 		),
 		(
 			'%artist%/%album%/',
@@ -98,7 +103,12 @@ def test_misc_template_to_filepath_default_patterns(template, metadata, expected
 	'template, metadata, expected',
 	[
 		(
-			'%art%/%alb%/%track% - %tit%',
+			'%art%/%alb%/%tracknum% - %tit%',
+			{'artist': 'Marian Hill', 'album': 'Sway', 'tracknumber': '1', 'title': 'One Time'},
+			Path('Marian Hill', 'Sway', '1 - One Time')
+		),
+		(
+			'%art%/%alb%/%tracknum2% - %tit%',
 			{'artist': 'Marian Hill', 'album': 'Sway', 'tracknumber': '1', 'title': 'One Time'},
 			Path('Marian Hill', 'Sway', '01 - One Time')
 		)
@@ -107,6 +117,10 @@ def test_misc_template_to_filepath_default_patterns(template, metadata, expected
 def test_misc_template_to_filepath_custom_patterns(template, metadata, expected):
 	assert template_to_filepath(
 		template, metadata, template_patterns={
-			'%alb%': 'album', '%art%': 'artist', '%tit%': 'title', '%track%': 'tracknumber'
+			'%alb%': ['album'],
+			'%art%': ['artist'],
+			'%tit%': ['title'],
+			'%tracknum%': ['tracknumber'],
+			'%tracknum2%': ['tracknumber']
 		}
 	) == expected

@@ -3,6 +3,8 @@ __all__ = ['suggest_filename', 'template_to_filepath']
 import re
 from pathlib import Path
 
+import more_itertools
+
 from .constants import CHARACTER_REPLACEMENTS, TEMPLATE_PATTERNS
 from .utils import list_to_single_value
 
@@ -14,7 +16,7 @@ def _replace_invalid_characters(filepath):
 	return filepath
 
 
-def _split_track_number(field):
+def _split_number_field(field):
 	match = re.match(r'(\d+)(?:/\d+)?', field)
 
 	return match.group(1) if match else field
@@ -35,7 +37,7 @@ def suggest_filename(metadata):
 	elif 'title' in metadata and 'trackNumber' in metadata:  # Mobile.
 		suggested_filename = f"{metadata['trackNumber']:0>2} {metadata['title']}"
 	elif 'title' in metadata and 'tracknumber' in metadata:  # audio-metadata/mutagen.
-		track_number = _split_track_number(
+		track_number = _split_number_field(
 			list_to_single_value(
 				metadata['tracknumber']
 			)
@@ -93,24 +95,33 @@ def template_to_filepath(template, metadata, template_patterns=None):
 				parts.append(part)
 			else:
 				for key in template_patterns:
-					if key in part and template_patterns[key] in metadata:
-						# Force track number to be zero-padded to 2 digits.
-						if any(
-							template_patterns[key] == tracknumber_field for tracknumber_field in ['tracknumber', 'track_number']
-						):
-							track_number = _split_track_number(
+					if (  # pragma: no branch
+						key in part
+						and any(field in metadata for field in template_patterns[key])
+					):
+						field = more_itertools.first_true(
+							template_patterns[key],
+							pred=lambda k: k in metadata
+						)
+
+						if key.startswith(('%disc', '%track')):
+							number = _split_number_field(
 								str(
 									list_to_single_value(
-										metadata[template_patterns[key]]
+										metadata[field]
 									)
 								)
 							)
-							metadata[template_patterns[key]] = track_number.zfill(2)
+
+							if key.endswith('2%'):
+								metadata[field] = number.zfill(2)
+							else:
+								metadata[field] = number
 
 						part = part.replace(
 							key,
 							list_to_single_value(
-								metadata[template_patterns[key]]
+								metadata[field]
 							)
 						)
 

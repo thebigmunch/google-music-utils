@@ -8,6 +8,11 @@ This project adheres to [Semantic Versioning](https://semver.org).
 
 [Commits](https://github.com/thebigmunch/google-music-utils/compare/2.0.1...master)
 
+### Changed
+
+* ``TEMPLATE_PATTERNS`` now supports multiple fields per pattern.
+* ``template_to_filepath no longer forces zero-padding of track/disc numbers.
+
 
 ## [2.0.1](https://github.com/thebigmunch/google-music-utils/releases/tag/2.0.1) (2019-01-16)
 
