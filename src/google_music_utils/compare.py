@@ -1,10 +1,8 @@
 __all__ = ['find_existing_items', 'find_missing_items']
 
 import os
-from collections.abc import Mapping
 
 import audio_metadata
-from multidict import MultiDict
 
 from .constants import FIELD_MAP
 from .utils import get_field, list_to_single_value, normalize_value
