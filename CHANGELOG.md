@@ -8,6 +8,10 @@ This project adheres to [Semantic Versioning](https://semver.org).
 
 [Commits](https://github.com/thebigmunch/google-music-utils/compare/2.0.1...master)
 
+### Added
+
+* Support for field maps in filtering.
+
 ### Changed
 
 * ``TEMPLATE_PATTERNS`` now supports multiple fields per pattern.

@@ -7,7 +7,7 @@ from itertools import filterfalse
 
 import audio_metadata
 
-from .utils import normalize_value
+from .utils import get_field, normalize_value
 
 
 def _match_field(field_value, pattern, ignore_case=False, normalize_values=False):
@@ -72,7 +72,7 @@ def _match_item(item, any_all=any, ignore_case=False, normalize_values=False, **
 
 	return any_all(
 		_match_field(
-			it.get(field, ''), pattern, ignore_case=ignore_case, normalize_values=normalize_values
+			get_field(it, field), pattern, ignore_case=ignore_case, normalize_values=normalize_values
 		) for field, patterns in kwargs.items() for pattern in patterns
 	)
 

@@ -7,7 +7,7 @@ import audio_metadata
 from multidict import MultiDict
 
 from .constants import FIELD_MAP
-from .utils import list_to_single_value, normalize_value
+from .utils import get_field, list_to_single_value, normalize_value
 
 
 def _gather_field_values(
@@ -38,28 +38,20 @@ def _gather_field_values(
 		it = item
 
 	if fields is None:
-		if hasattr(it, 'FIELD_MAP'):
-			fields = [it.FIELD_MAP.get(k, k) for k in it]
-		else:
-			fields = list(it.keys())
+		fields = list(it.keys())
 
 	normalize = normalize_func if normalize_values else lambda x: str(x)
 
 	field_values = []
 
 	for field in fields:
-		if it.get(field):
-			field_values.append(normalize(list_to_single_value(it[field])))
-		elif isinstance(field_map, MultiDict):
-			for alias in field_map.getall(field, []):
-				if it.get(alias):  # pragma: no branch
-					field_values.append(normalize(list_to_single_value(it[alias])))
-					break
-		elif isinstance(field_map, Mapping):  # pragma: no branch
-			alias = field_map.get(field)
-
-			if alias in it:  # pragma: no branch
-				field_values.append(normalize(list_to_single_value(it[alias])))
+		field_values.append(
+			normalize(
+				list_to_single_value(
+					get_field(it, field, field_map=field_map)
+				)
+			)
+		)
 
 	return tuple(field_values)
 

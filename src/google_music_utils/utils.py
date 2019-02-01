@@ -1,6 +1,33 @@
-__all__ = ['list_to_single_value', 'normalize_value']
+__all__ = [
+	'get_field',
+	'list_to_single_value',
+	'normalize_value'
+]
 
 import re
+from collections.abc import Mapping
+
+from multidict import MultiDict
+
+from .constants import FIELD_MAP
+
+
+def get_field(item, field, default='', *, field_map=FIELD_MAP):
+	value = default
+	if item.get(field):
+		value = item[field]
+	elif isinstance(field_map, MultiDict):
+		for alias in field_map.getall(field, []):
+			if item.get(alias):  # pragma: no branch
+				value = item[alias]
+				break
+	elif isinstance(field_map, Mapping):  # pragma: no branch
+		alias = field_map.get(field)
+
+		if alias in item:  # pragma: no branch
+			value = item[alias]
+
+	return value
 
 
 def list_to_single_value(value):
