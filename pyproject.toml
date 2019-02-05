@@ -20,9 +20,9 @@ homepage = "https://github.com/thebigmunch/google-music-utils"
 python = "^3.6"
 
 audio-metadata= "^0.4"
-more-itertools = "^4.0"
+more-itertools = ">=4.0,<=6.0"
 multidict = "^4.0"
-wrapt = "^1.10"
+wrapt = "^1.0"
 
 coverage = { version = "^4.5", optional = true }
 flake8 = { version = "^3.5", optional = true }
