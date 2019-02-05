@@ -14,7 +14,7 @@ set of utility functionality for google-music and related projects.
 
 ## Installation
 
-``pip install google-music-utils``
+``pip install -U google-music-utils``
 
 
 ## Usage
