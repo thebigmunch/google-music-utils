@@ -4,9 +4,11 @@ __all__ = [
 	'normalize_value'
 ]
 
+import os
 import re
 from collections.abc import Mapping
 
+import audio_metadata
 from multidict import MultiDict
 
 from .constants import FIELD_MAP
@@ -28,6 +30,17 @@ def get_field(item, field, default='', *, field_map=FIELD_MAP):
 			value = item[alias]
 
 	return value
+
+
+def get_item_tags(item):
+	if isinstance(item, (str, os.PathLike)):
+		it = audio_metadata.load(item).tags
+	elif isinstance(item, audio_metadata.Format):
+		it = item.tags
+	else:
+		it = item
+
+	return it
 
 
 def list_to_single_value(value):

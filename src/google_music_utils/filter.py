@@ -1,13 +1,14 @@
 __all__ = ['exclude_items', 'include_items']
 
 import functools
-import os
 import re
 from itertools import filterfalse
 
-import audio_metadata
-
-from .utils import get_field, normalize_value
+from .utils import (
+	get_field,
+	get_item_tags,
+	normalize_value
+)
 
 
 def _match_field(field_value, pattern, ignore_case=False, normalize_values=False):
@@ -63,12 +64,7 @@ def _match_item(item, any_all=any, ignore_case=False, normalize_values=False, **
 		bool: True if matched, False if not.
 	"""
 
-	if isinstance(item, (str, os.PathLike)):
-		it = audio_metadata.load(item).tags
-	elif isinstance(item, audio_metadata.Format):
-		it = item.tags
-	else:
-		it = item
+	it = get_item_tags(item)
 
 	return any_all(
 		_match_field(

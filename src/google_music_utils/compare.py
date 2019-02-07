@@ -1,11 +1,12 @@
 __all__ = ['find_existing_items', 'find_missing_items']
 
-import os
-
-import audio_metadata
-
 from .constants import FIELD_MAP
-from .utils import get_field, list_to_single_value, normalize_value
+from .utils import (
+	get_field,
+	get_item_tags,
+	list_to_single_value,
+	normalize_value
+)
 
 
 def _gather_field_values(
@@ -28,12 +29,7 @@ def _gather_field_values(
 		tuple: Values from the given metadata fields.
 	"""
 
-	if isinstance(item, (str, os.PathLike)):
-		it = audio_metadata.load(item).tags
-	elif isinstance(item, audio_metadata.Format):
-		it = item.tags
-	else:
-		it = item
+	it = get_item_tags(item)
 
 	if fields is None:
 		fields = list(it.keys())
