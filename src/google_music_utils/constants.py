@@ -1,4 +1,8 @@
-__all__ = ['CHARACTER_REPLACEMENTS', 'FIELD_MAP', 'TEMPLATE_PATTERNS']
+__all__ = [
+	'CHARACTER_REPLACEMENTS',
+	'FIELD_MAP',
+	'TEMPLATE_PATTERNS',
+]
 
 from multidict import MultiDict
 
@@ -11,7 +15,7 @@ CHARACTER_REPLACEMENTS = {
 	'>': ']',
 	'|': '!',
 	'?': '',
-	'"': "''"
+	'"': "''",
 }
 """dict: Mapping of invalid filepath characters with appropriate replacements."""
 
@@ -22,9 +26,15 @@ _FIELD_MAP_GROUPS = [
 	('discnumber', 'disc_number', 'discNumber'),
 	('disctotal', 'total_disc_count', 'totalDiscCount'),
 	('tracknumber', 'track_number', 'trackNumber'),
-	('tracktotal', 'total_track_count', 'totalTrackCount')
+	('tracktotal', 'total_track_count', 'totalTrackCount'),
 ]
-_FIELD_MAP = [(field, alias) for group in _FIELD_MAP_GROUPS for field in group for alias in group if field != alias]
+_FIELD_MAP = [
+	(field, alias)
+	for group in _FIELD_MAP_GROUPS
+	for field in group
+	for alias in group
+	if field != alias
+]
 
 FIELD_MAP = MultiDict(_FIELD_MAP)
 """MultiDict: Mapping of field name aliases."""
@@ -44,6 +54,6 @@ TEMPLATE_PATTERNS = {
 	'%track%': ['tracknumber', 'track_number', 'trackNumber'],
 	'%track2%': ['tracknumber', 'track_number', 'trackNumber'],
 	'%tracknumber%': ['tracknumber', 'track_number', 'trackNumber'],
-	'%tracknumber2%': ['tracknumber', 'track_number', 'trackNumber']
+	'%tracknumber2%': ['tracknumber', 'track_number', 'trackNumber'],
 }
 """dict: Mapping of template patterns to their metadata field names."""

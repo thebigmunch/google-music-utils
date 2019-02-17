@@ -1,4 +1,7 @@
-__all__ = ['suggest_filename', 'template_to_filepath']
+__all__ = [
+	'suggest_filename',
+	'template_to_filepath',
+]
 
 import re
 from pathlib import Path
@@ -38,9 +41,7 @@ def suggest_filename(metadata):
 		suggested_filename = f"{metadata['trackNumber']:0>2} {metadata['title']}"
 	elif 'title' in metadata and 'tracknumber' in metadata:  # audio-metadata/mutagen.
 		track_number = _split_number_field(
-			list_to_single_value(
-				metadata['tracknumber']
-			)
+			list_to_single_value(metadata['tracknumber'])
 		)
 		title = list_to_single_value(metadata['title'])
 
@@ -83,7 +84,10 @@ def template_to_filepath(template, metadata, template_patterns=None):
 		or path == Path('%suggested%')
 	):
 		filepath = Path(suggested_filename)
-	elif any(template_pattern in path.parts for template_pattern in template_patterns):
+	elif any(
+		template_pattern in path.parts
+		for template_pattern in template_patterns
+	):
 		if template.endswith(('/', '\\')):
 			template += suggested_filename
 
@@ -97,7 +101,10 @@ def template_to_filepath(template, metadata, template_patterns=None):
 				for key in template_patterns:
 					if (  # pragma: no branch
 						key in part
-						and any(field in metadata for field in template_patterns[key])
+						and any(
+							field in metadata
+							for field in template_patterns[key]
+						)
 					):
 						field = more_itertools.first_true(
 							template_patterns[key],
@@ -120,9 +127,7 @@ def template_to_filepath(template, metadata, template_patterns=None):
 
 						part = part.replace(
 							key,
-							list_to_single_value(
-								metadata[field]
-							)
+							list_to_single_value(metadata[field])
 						)
 
 				parts.append(_replace_invalid_characters(part))

@@ -11,5 +11,5 @@ __all__ = [
 	*constants.__all__,
 	*filter.__all__,
 	*metadata.__all__,
-	*misc.__all__
+	*misc.__all__,
 ]

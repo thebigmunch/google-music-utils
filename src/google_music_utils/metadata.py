@@ -1,7 +1,13 @@
 __all__ = [
-	'gm_timestamp', 'from_gm_timestamp', 'to_gm_timestamp',
-	'is_album_id', 'is_artist_id', 'is_podcast_episode_id',
-	'is_podcast_series_id', 'is_store_song_id', 'is_uuid'
+	'gm_timestamp',
+	'from_gm_timestamp',
+	'to_gm_timestamp',
+	'is_album_id',
+	'is_artist_id',
+	'is_podcast_episode_id',
+	'is_podcast_series_id',
+	'is_store_song_id',
+	'is_uuid',
 ]
 
 import re

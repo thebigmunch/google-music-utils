@@ -1,4 +1,7 @@
-__all__ = ['exclude_items', 'include_items']
+__all__ = [
+	'exclude_items',
+	'include_items',
+]
 
 import functools
 import re
@@ -7,11 +10,17 @@ from itertools import filterfalse
 from .utils import (
 	get_field,
 	get_item_tags,
-	normalize_value
+	normalize_value,
 )
 
 
-def _match_field(field_value, pattern, ignore_case=False, normalize_values=False):
+def _match_field(
+	field_value,
+	pattern,
+	*,
+	ignore_case=False,
+	normalize_values=False
+):
 	"""Match an item metadata field value by pattern.
 
 	Note:
@@ -21,9 +30,11 @@ def _match_field(field_value, pattern, ignore_case=False, normalize_values=False
 	Parameters:
 		field_value (list or str): A metadata field value to check.
 		pattern (str): A regex pattern to check the field value(s) against.
-		ignore_case (bool): Perform case-insensitive matching.
+		ignore_case (bool, Optional):
+			Perform case-insensitive matching.
 			Default: ``False``
-		normalize_values (bool): Normalize metadata values to remove common differences between sources.
+		normalize_values (bool, Optional):
+			Normalize metadata values to remove common differences between sources.
 			Default: ``False``
 
 	Returns:
@@ -43,7 +54,14 @@ def _match_field(field_value, pattern, ignore_case=False, normalize_values=False
 		return search(pattern, normalize(field_value))
 
 
-def _match_item(item, any_all=any, ignore_case=False, normalize_values=False, **kwargs):
+def _match_item(
+	item,
+	*,
+	any_all=any,
+	ignore_case=False,
+	normalize_values=False,
+	**kwargs
+):
 	"""Match items by metadata.
 
 	Note:
@@ -52,13 +70,16 @@ def _match_item(item, any_all=any, ignore_case=False, normalize_values=False, **
 
 	Parameters:
 		item (~collections.abc.Mapping, str, os.PathLike): Item dict or filepath.
-		any_all (callable): A callable to determine if any or all filters must match to match item.
+		any_all (callable, Optional):
+			A callable to determine if any or all filters must match to match item.
 			Expected values :obj:`any` (default) or :obj:`all`.
-		ignore_case (bool): Perform case-insensitive matching.
+		ignore_case (bool, Optional):
+			Perform case-insensitive matching.
 			Default: ``False``
-		normalize_values (bool): Normalize metadata values to remove common differences between sources.
+		normalize_values (bool, Optional):
+			Normalize metadata values to remove common differences between sources.
 			Default: ``False``
-		kwargs (list): Lists of values to match the given metadata field.
+		kwargs (list, Optional): Lists of values to match the given metadata field.
 
 	Returns:
 		bool: True if matched, False if not.
@@ -68,12 +89,24 @@ def _match_item(item, any_all=any, ignore_case=False, normalize_values=False, **
 
 	return any_all(
 		_match_field(
-			get_field(it, field), pattern, ignore_case=ignore_case, normalize_values=normalize_values
-		) for field, patterns in kwargs.items() for pattern in patterns
+			get_field(it, field),
+			pattern,
+			ignore_case=ignore_case,
+			normalize_values=normalize_values,
+		)
+		for field, patterns in kwargs.items()
+		for pattern in patterns
 	)
 
 
-def exclude_items(items, any_all=any, ignore_case=False, normalize_values=False, **kwargs):
+def exclude_items(
+	items,
+	*,
+	any_all=any,
+	ignore_case=False,
+	normalize_values=False,
+	**kwargs
+):
 	"""Exclude items by matching metadata.
 
 	Note:
@@ -82,13 +115,16 @@ def exclude_items(items, any_all=any, ignore_case=False, normalize_values=False,
 
 	Parameters:
 		items (list): A list of item dicts or filepaths.
-		any_all (callable): A callable to determine if any or all filters must match to exclude items.
+		any_all (callable, Optional):
+			A callable to determine if any or all filters must match to exclude items.
 			Expected values :obj:`any` (default) or :obj:`all`.
-		ignore_case (bool): Perform case-insensitive matching.
+		ignore_case (bool, Optional):
+			Perform case-insensitive matching.
 			Default: ``False``
-		normalize_values (bool): Normalize metadata values to remove common differences between sources.
+		normalize_values (bool, Optional):
+			Normalize metadata values to remove common differences between sources.
 			Default: ``False``
-		kwargs (list): Lists of values to match the given metadata field.
+		kwargs (list, Optional): Lists of values to match the given metadata field.
 
 	Yields:
 		dict: The next item to be included.
@@ -100,7 +136,11 @@ def exclude_items(items, any_all=any, ignore_case=False, normalize_values=False,
 
 	if kwargs:
 		match = functools.partial(
-			_match_item, any_all=any_all, ignore_case=ignore_case, normalize_values=normalize_values, **kwargs
+			_match_item,
+			any_all=any_all,
+			ignore_case=ignore_case,
+			normalize_values=normalize_values,
+			**kwargs
 		)
 
 		return filterfalse(match, items)
@@ -108,7 +148,14 @@ def exclude_items(items, any_all=any, ignore_case=False, normalize_values=False,
 		return iter(items)
 
 
-def include_items(items, any_all=any, ignore_case=False, normalize_values=False, **kwargs):
+def include_items(
+	items,
+	*,
+	any_all=any,
+	ignore_case=False,
+	normalize_values=False,
+	**kwargs
+):
 	"""Include items by matching metadata.
 
 	Note:
@@ -117,13 +164,16 @@ def include_items(items, any_all=any, ignore_case=False, normalize_values=False,
 
 	Parameters:
 		items (list): A list of item dicts or filepaths.
-		any_all (callable): A callable to determine if any or all filters must match to include items.
+		any_all (callable, Optional):
+			A callable to determine if any or all filters must match to include items.
 			Expected values :obj:`any` (default) or :obj:`all`.
-		ignore_case (bool): Perform case-insensitive matching.
+		ignore_case (bool, Optional):
+			Perform case-insensitive matching.
 			Default: ``False``
-		normalize_values (bool): Normalize metadata values to remove common differences between sources.
+		normalize_values (bool, Optional):
+			Normalize metadata values to remove common differences between sources.
 			Default: ``False``
-		kwargs (list): Lists of values to match the given metadata field.
+		kwargs (list, Optional): Lists of values to match the given metadata field.
 
 	Yields:
 		dict: The next item to be included.
@@ -135,7 +185,11 @@ def include_items(items, any_all=any, ignore_case=False, normalize_values=False,
 
 	if kwargs:
 		match = functools.partial(
-			_match_item, any_all=any_all, ignore_case=ignore_case, normalize_values=normalize_values, **kwargs
+			_match_item,
+			any_all=any_all,
+			ignore_case=ignore_case,
+			normalize_values=normalize_values,
+			**kwargs
 		)
 
 		return filter(match, items)
