@@ -58,3 +58,9 @@ Utils
 
 .. automodule:: google_music_utils.utils
 	:members:
+
+
+.. toctree::
+	:hidden:
+
+	index

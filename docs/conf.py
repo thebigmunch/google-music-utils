@@ -89,7 +89,13 @@ html_theme = 'alabaster'
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-# html_theme_options = {}
+html_theme_options = {
+	'fixed_sidebar': True,
+	'github_user': 'thebigmunch',
+	'github_repo': 'google-music-utils',
+	'github_type': 'star',
+	'show_powered_by': False
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
