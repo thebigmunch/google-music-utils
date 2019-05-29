@@ -63,4 +63,4 @@ Utils
 .. toctree::
 	:hidden:
 
-	index
+	self

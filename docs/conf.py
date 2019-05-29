@@ -16,10 +16,8 @@ with open(os.path.join(project_dir, 'src', 'google_music_utils', '__about__.py')
 extensions = [
 	'sphinx.ext.autodoc',
 	'sphinx.ext.extlinks',
-	'sphinx.ext.ifconfig',
 	'sphinx.ext.intersphinx',
 	'sphinx.ext.napoleon',
-	'sphinx.ext.todo',
 	'sphinx.ext.viewcode'
 ]
 
@@ -78,7 +76,8 @@ todo_include_todos = True
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
-	'python': ('https://docs.python.org/3', None)
+	'python': ('https://docs.python.org/3', None),
+	'multidict': ('https://multidict.readthedocs.io/en/stable/', None)
 }
 
 # -- Options for HTML output ----------------------------------------------
@@ -100,10 +99,20 @@ html_theme_options = {
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = []
+# html_static_path = ['_static']
 
 # If true, links to the reST sources are added to the pages.
 html_show_sourcelink = False
 
 # If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
 html_show_sphinx = False
+
+html_sidebars = {
+	'**': [
+		'about.html',
+		'localtoc.html',
+		'relations.html',
+		'searchbox.html',
+		'donate.html',
+	]
+}
