@@ -62,15 +62,15 @@ This project adheres to [Semantic Versioning](https://semver.org).
 
 * ``find_existing_items`` for finding items common to two item collections.
 * ``normalize_func`` parameter to compare module functions to allow custom
-  field value normalization when ``normalize_values`` is ``True``.
-  The default normalization function remains the same.
+	field value normalization when ``normalize_values`` is ``True``.
+	The default normalization function remains the same.
 
 ### Changed
 
 * Rename ``compare_item_collections`` to ``find_missing_items``.
-  ``compare_item_collections`` alias added for backward compatibility.
+	``compare_item_collections`` alias added for backward compatibility.
 * ``str.casefold()`` is now used to normalize metadata rather than
-  ``str.lower()``. This is friendlier to non-English language.
+	``str.lower()``. This is friendlier to non-English language.
 
 ### Deprecated
 

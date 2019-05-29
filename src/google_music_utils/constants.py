@@ -37,7 +37,7 @@ _FIELD_MAP = [
 ]
 
 FIELD_MAP = MultiDict(_FIELD_MAP)
-"""MultiDict: Mapping of field name aliases."""
+"""~multidict.MultiDict: Mapping of field name aliases."""
 
 # TODO: Support other/more metadata field names.
 TEMPLATE_PATTERNS = {
