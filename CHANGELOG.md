@@ -6,7 +6,16 @@ This project adheres to [Semantic Versioning](https://semver.org).
 
 ## [Unreleased](https://github.com/thebigmunch/google-music-utils/tree/master)
 
-[Commits](https://github.com/thebigmunch/google-music-utils/compare/2.1.0...master)
+[Commits](https://github.com/thebigmunch/google-music-utils/compare/2.2.0...master)
+
+
+## [2.2.0](https://github.com/thebigmunch/google-music-utils/releases/tag/2.2.0) (2019-07-22)
+
+[Commits](https://github.com/thebigmunch/google-music-utils/compare/2.1.0...2.2.0)
+
+### Changed
+
+* Update audio-metadata dependency version.
 
 
 ## [2.1.0](https://github.com/thebigmunch/google-music-utils/releases/tag/2.1.0) (2019-02-01)
