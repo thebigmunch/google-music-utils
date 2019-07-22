@@ -19,7 +19,7 @@ homepage = "https://github.com/thebigmunch/google-music-utils"
 [tool.poetry.dependencies]
 python = "^3.6"
 
-audio-metadata= "^0.4"
+audio-metadata = "^0.5"
 more-itertools = ">=4.0,<7.0"
 multidict = "^4.0"
 wrapt = "^1.0"
