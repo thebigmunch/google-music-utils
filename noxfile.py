@@ -3,11 +3,17 @@ import shutil
 
 import nox
 
+ON_TRAVIS = 'TRAVIS' in os.environ
+
 py36 = '3.6'
 py37 = '3.7'
 py38 = '3.8'
 
-ON_TRAVIS = 'TRAVIS' in os.environ
+nox.options.sessions = [
+	'lint',
+	'doc',
+	'test'
+]
 
 
 @nox.session(python=py37)
@@ -35,24 +41,31 @@ def doc(session):
 
 @nox.session(python=[py36, py37, py38])
 def test(session):
-	session.notify('coverage')
+	session.install('.[test]')
+	session.run('coverage', 'run', '-m', 'pytest', *session.posargs)
 	session.notify('report')
 
 
-@nox.session
-def coverage(session):
+@nox.session(python=[py36, py37, py38])
+def integration(session):
 	session.install('.[test]')
-	session.run('coverage', 'run', '-m', 'pytest')
+	session.run('coverage', 'run', '-m', 'pytest', '-m', 'integration', *session.posargs)
+	session.notify('report')
+
+
+@nox.session(python=[py36, py37, py38])
+def unit(session):
+	session.install('.[test]')
+	session.run('coverage', 'run', '-m', 'pytest', '-m', 'not integration', *session.posargs)
 	session.notify('report')
 
 
 @nox.session
 def report(session):
-	session.install('coverage')
-	session.run('coverage', 'report', '-m')
-
 	if ON_TRAVIS:
 		session.install('codecov')
 		session.run('codecov')
 
+	session.install('coverage')
+	session.run('coverage', 'report', '-m')
 	session.run('coverage', 'erase')
