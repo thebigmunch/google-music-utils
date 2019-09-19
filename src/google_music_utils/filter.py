@@ -7,6 +7,7 @@ import functools
 import re
 from itertools import filterfalse
 
+
 from .utils import (
 	get_field,
 	get_item_tags,
@@ -85,18 +86,19 @@ def _match_item(
 		bool: True if matched, False if not.
 	"""
 
-	it = get_item_tags(item)
+	tags = get_item_tags(item)
 
-	return any_all(
-		_match_field(
-			get_field(it, field),
-			pattern,
-			ignore_case=ignore_case,
-			normalize_values=normalize_values,
+	if tags is not None:
+		return any_all(
+			_match_field(
+				get_field(tags, field),
+				pattern,
+				ignore_case=ignore_case,
+				normalize_values=normalize_values,
+			)
+			for field, patterns in kwargs.items()
+			for pattern in patterns
 		)
-		for field, patterns in kwargs.items()
-		for pattern in patterns
-	)
 
 
 def exclude_items(

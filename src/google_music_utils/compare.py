@@ -39,25 +39,26 @@ def _gather_field_values(
 		tuple: Values from the given metadata fields.
 	"""
 
-	it = get_item_tags(item)
+	tags = get_item_tags(item)
 
-	if fields is None:
-		fields = list(it.keys())
+	if tags is not None:
+		if fields is None:
+			fields = list(tags.keys())
 
-	normalize = normalize_func if normalize_values else lambda x: str(x)
+		normalize = normalize_func if normalize_values else lambda x: str(x)
 
-	field_values = []
+		field_values = []
 
-	for field in fields:
-		field_values.append(
-			normalize(
-				list_to_single_value(
-					get_field(it, field, field_map=field_map)
+		for field in fields:
+			field_values.append(
+				normalize(
+					list_to_single_value(
+						get_field(tags, field, field_map=field_map)
+					)
 				)
 			)
-		)
 
-	return tuple(field_values)
+		return tuple(field_values)
 
 
 def find_existing_items(
@@ -92,27 +93,31 @@ def find_existing_items(
 	if field_map is None:
 		field_map = FIELD_MAP
 
-	dst_keys = {
-		_gather_field_values(
+	dst_keys = set()
+	for dst_item in dst:
+		field_values = _gather_field_values(
 			dst_item,
 			fields=fields,
 			field_map=field_map,
 			normalize_values=normalize_values,
 			normalize_func=normalize_func,
 		)
-		for dst_item in dst
-	}
+
+		if field_values is not None:
+			dst_keys.add(field_values)
 
 	for src_item in src:
+		field_values = _gather_field_values(
+			src_item,
+			fields=fields,
+			field_map=field_map,
+			normalize_values=normalize_values,
+			normalize_func=normalize_func,
+		)
+
 		if (
-			_gather_field_values(
-				src_item,
-				fields=fields,
-				field_map=field_map,
-				normalize_values=normalize_values,
-				normalize_func=normalize_func,
-			)
-			in dst_keys
+			field_values is not None
+			and field_values in dst_keys
 		):
 			yield src_item
 
@@ -149,26 +154,29 @@ def find_missing_items(
 	if field_map is None:
 		field_map = FIELD_MAP
 
-	dst_keys = {
-		_gather_field_values(
+	dst_keys = set()
+	for dst_item in dst:
+		field_values = _gather_field_values(
 			dst_item,
 			fields=fields,
 			field_map=field_map,
 			normalize_values=normalize_values,
 			normalize_func=normalize_func,
 		)
-		for dst_item in dst
-	}
+
+		if field_values is not None:
+			dst_keys.add(field_values)
 
 	for src_item in src:
+		field_values = _gather_field_values(
+			src_item,
+			fields=fields,
+			field_map=field_map,
+			normalize_values=normalize_values,
+			normalize_func=normalize_func,
+		)
 		if (
-			_gather_field_values(
-				src_item,
-				fields=fields,
-				field_map=field_map,
-				normalize_values=normalize_values,
-				normalize_func=normalize_func,
-			)
-			not in dst_keys
+			field_values is not None
+			and field_values not in dst_keys
 		):
 			yield src_item

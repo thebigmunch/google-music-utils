@@ -9,38 +9,43 @@ import re
 from collections.abc import Mapping
 
 import audio_metadata
+from audio_metadata import AudioMetadataException
 from multidict import MultiDict
 
 from .constants import FIELD_MAP
 
 
-def get_field(item, field, default='', *, field_map=FIELD_MAP):
+def get_field(tags, field, default='', *, field_map=FIELD_MAP):
 	value = default
-	if item.get(field):
-		value = item[field]
-	elif isinstance(field_map, MultiDict):
-		for alias in field_map.getall(field, []):
-			if item.get(alias):  # pragma: no branch
-				value = item[alias]
-				break
-	elif isinstance(field_map, Mapping):  # pragma: no branch
-		alias = field_map.get(field)
+	try:
+		value = tags[field]
+	except KeyError:
+		if isinstance(field_map, MultiDict):
+			for alias in field_map.getall(field, []):
+				if tags.get(alias):  # pragma: no branch
+					value = tags[alias]
+					break
+		elif isinstance(field_map, Mapping):  # pragma: no branch
+			alias = field_map.get(field)
 
-		if alias in item:  # pragma: no branch
-			value = item[alias]
+			if alias in tags:  # pragma: no branch
+				value = tags[alias]
 
 	return value
 
 
 def get_item_tags(item):
 	if isinstance(item, (str, os.PathLike)):
-		it = audio_metadata.load(item).tags
+		try:
+			tags = audio_metadata.load(item).tags
+		except AudioMetadataException:
+			tags = None
 	elif isinstance(item, audio_metadata.Format):
-		it = item.tags
+		tags = item.tags
 	else:
-		it = item
+		tags = item
 
-	return it
+	return tags
 
 
 def list_to_single_value(value):

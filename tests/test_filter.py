@@ -39,6 +39,11 @@ class TestMatchItem:
 
 		assert matched is True
 
+	def test_unsupported_format(self):
+		matched = _match_item(__file__)
+
+		assert matched is None
+
 
 class TestIncludeItems:
 	def test_include_items_no_filters(self):

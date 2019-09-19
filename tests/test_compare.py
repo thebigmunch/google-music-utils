@@ -1,3 +1,4 @@
+import pytest
 from google_music_utils import find_existing_items, find_missing_items
 from google_music_utils.compare import _gather_field_values
 
@@ -18,8 +19,35 @@ class TestGatherFieldValues:
 		_gather_field_values(TEST_MAPPING_1)
 		_gather_field_values(TEST_PATH_1)
 
+		assert _gather_field_values(__file__) is None
+
 
 class TestExistingItems:
+	@pytest.mark.parametrize(
+		'src, dst, expected',
+		[
+			(
+				[__file__],
+				TEST_MAPPING_ITEMS_1,
+				[]
+			),
+			(
+				TEST_MAPPING_ITEMS_1,
+				[__file__],
+				[]
+			)
+		]
+	)
+	def test_unsupported_format(self, src, dst, expected):
+		existing = list(
+			find_existing_items(
+				src,
+				dst
+			)
+		)
+
+		assert existing == expected
+
 	def test_no_fields_same(self):
 		existing = list(
 			find_existing_items(
@@ -141,6 +169,31 @@ class TestExistingItems:
 
 
 class TestMissingItems:
+	@pytest.mark.parametrize(
+		'src, dst, expected',
+		[
+			(
+				[__file__],
+				TEST_MAPPING_ITEMS_1,
+				[]
+			),
+			(
+				TEST_MAPPING_ITEMS_1,
+				[__file__],
+				TEST_MAPPING_ITEMS_1
+			)
+		]
+	)
+	def test_unsupported_format(self, src, dst, expected):
+		existing = list(
+			find_missing_items(
+				src,
+				dst
+			)
+		)
+
+		assert existing == expected
+
 	def test_no_fields_same(self):
 		missing = list(
 			find_missing_items(
