@@ -1,4 +1,5 @@
 import pytest
+
 from google_music_utils.utils import list_to_single_value, normalize_value
 
 

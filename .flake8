@@ -2,6 +2,7 @@
 ignore = E117, W191, W503, F403, F405
 max-line-length = 150
 import-order-style = tbm
+application-import-names = google_music_utils
 exclude =
 	__pycache__
 	.nox

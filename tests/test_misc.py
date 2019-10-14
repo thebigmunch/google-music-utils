@@ -3,6 +3,7 @@ from pathlib import Path
 
 import pytest
 from audio_metadata import Tags
+
 from google_music_utils.misc import suggest_filename, template_to_filepath
 
 

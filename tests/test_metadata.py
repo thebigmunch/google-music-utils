@@ -2,6 +2,7 @@ import time
 from uuid import uuid4
 
 import pytest
+
 from google_music_utils.metadata import (
 	from_gm_timestamp, gm_timestamp, is_album_id, is_artist_id,
 	is_podcast_episode_id, is_podcast_series_id,

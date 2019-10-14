@@ -1,10 +1,10 @@
 import pytest
+
 from google_music_utils import (
 	exclude_items,
 	include_items
 )
 from google_music_utils.filter import _match_item
-
 from .fixtures import (
 	TEST_FORMAT_1,
 	TEST_MAPPING_1,

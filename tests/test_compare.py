@@ -1,7 +1,7 @@
 import pytest
+
 from google_music_utils import find_existing_items, find_missing_items
 from google_music_utils.compare import _gather_field_values
-
 from .fixtures import (
 	TEST_FORMAT_1,
 	TEST_MAPPING_1,
