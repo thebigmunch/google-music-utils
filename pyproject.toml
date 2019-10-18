@@ -5,7 +5,7 @@ build-backend = "poetry.masonry.api"
 [tool.poetry]
 name = "google-music-utils"
 description = "A set of utility functionality for google-music and related projects."
-version = "2.2.0"
+version = "2.2.1"
 
 license = "MIT"
 
@@ -19,7 +19,7 @@ homepage = "https://github.com/thebigmunch/google-music-utils"
 [tool.poetry.dependencies]
 python = "^3.6"
 
-audio-metadata = "^0.5"
+audio-metadata = "^0.6"
 more-itertools = ">=4.0,<8.0"
 multidict = "^4.0"
 wrapt = "^1.0"
