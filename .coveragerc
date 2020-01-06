@@ -1,7 +1,0 @@
-[run]
-branch = True
-source = google_music_utils
-
-[report]
-precision = 2
-show_missing = True
