@@ -70,6 +70,10 @@ test = [
 [tool.coverage.run]
 branch = true
 source = [ "google_music_utils" ]
+omit = [
+	"**/__about__.py",
+	"**/__init__.py",
+]
 
 [tool.coverage.report]
 precision = 2
