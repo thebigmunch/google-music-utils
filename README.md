@@ -2,7 +2,7 @@
 
 [![PyPI](https://img.shields.io/pypi/v/google-music-utils.svg?label=PyPI)](https://pypi.org/project/google-music-utils/)
 ![](https://img.shields.io/badge/Python-3.6%2B-blue.svg)  
-[![Travis](https://img.shields.io/travis/thebigmunch/google-music-utils.svg?label=Travis)](https://travis-ci.org/thebigmunch/google-music-utils)
+[![GitHub CI](https://img.shields.io/github/workflow/status/thebigmunch/google-music-utils/CI?label=GitHub%20CI)](https://github.com/thebigmunch/google-music-utils/actions?query=workflow%3ACI)
 [![Codecov](https://img.shields.io/codecov/c/github/thebigmunch/google-music-utils.svg?label=Codecov)](https://codecov.io/gh/thebigmunch/google-music-utils)  
 [![Docs - Stable](https://img.shields.io/readthedocs/google-music-utils/stable.svg?label=Docs%20%28Stable%29)](https://google-music-utils.readthedocs.io/en/stable/)
 [![Docs - Latest](https://img.shields.io/readthedocs/google-music-utils/latest.svg?label=Docs%20%28Latest%29)](https://google-music-utils.readthedocs.io/en/latest/)
