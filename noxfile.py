@@ -51,20 +51,6 @@ def test(session):
 		session.notify('report')
 
 
-@nox.session(python=[py36, py37, py38])
-def integration(session):
-	session.install('-U', '.[test]')
-	session.run('coverage', 'run', '-m', 'pytest', '-m', 'integration', *session.posargs)
-	session.notify('report')
-
-
-@nox.session(python=[py36, py37, py38])
-def unit(session):
-	session.install('-U', '.[test]')
-	session.run('coverage', 'run', '-m', 'pytest', '-m', 'not integration', *session.posargs)
-	session.notify('report')
-
-
 @nox.session
 def report(session):
 	session.install('-U', 'coverage[toml]')
