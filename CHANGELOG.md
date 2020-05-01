@@ -6,7 +6,16 @@ This project adheres to [Semantic Versioning](https://semver.org).
 
 ## [Unreleased](https://github.com/thebigmunch/google-music-utils/tree/master)
 
-[Commits](https://github.com/thebigmunch/google-music-utils/compare/2.3.0...master)
+[Commits](https://github.com/thebigmunch/google-music-utils/compare/2.4.0...master)
+
+
+## [2.4.0](https://github.com/thebigmunch/google-music-utils/releases/tag/2.4.0) (2020-05-01)
+
+[Commits](https://github.com/thebigmunch/google-music-utils/compare/2.3.0...2.4.0)
+
+### Changed
+
+* Revert "Use importlib.metadata to dynamically populate module metadata".
 
 
 ## [2.3.0](https://github.com/thebigmunch/google-music-utils/releases/tag/2.3.0) (2020-04-08)
