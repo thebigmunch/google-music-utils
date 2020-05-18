@@ -6,7 +6,7 @@ build-backend = "poetry.masonry.api"
 [tool.poetry]
 name = "google-music-utils"
 description = "A set of utility functionality for google-music and related projects."
-version = "2.4.0"
+version = "2.5.0"
 
 license = "MIT"
 
