@@ -8,6 +8,10 @@ This project adheres to [Semantic Versioning](https://semver.org).
 
 [Commits](https://github.com/thebigmunch/google-music-utils/compare/2.4.0...master)
 
+### Changed
+
+* Cast timestamp argument to int in timestamp functions.
+
 
 ## [2.4.0](https://github.com/thebigmunch/google-music-utils/releases/tag/2.4.0) (2020-05-01)
 

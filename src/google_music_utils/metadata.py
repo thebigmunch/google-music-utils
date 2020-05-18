@@ -19,19 +19,19 @@ _uuid_re = re.compile(r'^[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}$')
 def gm_timestamp():
 	"""Generate a timestamp in microseconds."""
 
-	return int(time.time() * 1000000)
+	return int(time.time()) * 1000000
 
 
 def from_gm_timestamp(timestamp):
 	"""Convert timestamp in microseconds to timestamp in seconds."""
 
-	return int(timestamp / 1000000)
+	return int(timestamp) // 1000000
 
 
 def to_gm_timestamp(timestamp):
 	"""Convert timestamp in seconds to timestamp in microseconds."""
 
-	return int(timestamp * 1000000)
+	return int(timestamp) * 1000000
 
 
 def is_album_id(item_id):
