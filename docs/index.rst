@@ -1,6 +1,8 @@
 google-music-utils
 ==================
 
+**Due to Google Music shutting down in favor of YouTube Music, this project has ended.**
+
 A set of utility functionality for `google-music <https://google-music.readthedocs.io/>`_
 and related projects.
 
